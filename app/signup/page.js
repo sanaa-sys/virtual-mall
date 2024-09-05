@@ -10,7 +10,8 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import SparklesPreview from '@/components/sparklescont';
 
-export default function Login() {
+export default function Signup() {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -19,7 +20,7 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!email || !password) {
+        if (!name || !email || !password) {
             setError('Please fill out all fields.');
             toast({
                 variant: 'destructive',
@@ -29,13 +30,17 @@ export default function Login() {
             return;
         }
         try {
-            const response = await axios.post('/api/login', { email, password });
+            const response = await axios.post('/api/signup', {
+                email,
+                password,
+                name,
+            });
             console.log(response.data);
             localStorage.setItem('token', response.data.token);
             router.push('/dashboard');
         } catch (err) {
-            setError('Login failed. Please check your credentials.');
-            console.error('Login error:', err);
+            setError('Signup failed. Please check your credentials.');
+            console.error('Signup error:', err);
             toast({
                 variant: 'destructive',
                 title: 'Uh oh! Something went wrong.',
@@ -46,15 +51,30 @@ export default function Login() {
 
     return (
         <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen">
+            <div className="hidden bg-muted lg:block "
+                style={{ backgroundImage: "url('/logo1.png')" }}
+            >
+            </div>{' '}
             <div className="flex items-center justify-center py-12">
                 <div className="mx-auto grid w-[350px] gap-6">
                     <div className="grid gap-2 text-center">
-                        <h1 className="text-3xl font-bold">Login</h1>
+                        <h1 className="text-3xl font-bold">Welcome to FeastFleet</h1>
+                        <h1 className="text-3xl font-bold">Sign Up</h1>
                         <p className="text-balance text-muted-foreground">
-                            Enter your email below to login to your account
+                            Enter your email below to create an account
                         </p>
                     </div>
                     <div className="grid gap-4">
+                        <div className="grid gap-2">
+                            <Label htmlFor="Name">Name</Label>
+                            <Input
+                                id="Name"
+                                type="text"
+                                placeholder="John Doe"
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                            />
+                        </div>
                         <div className="grid gap-2">
                             <Label htmlFor="email">Email</Label>
                             <Input
@@ -77,23 +97,17 @@ export default function Login() {
                             />
                         </div>
                         <Button type="submit" className="w-full" onClick={handleSubmit}>
-                            Login
+                            Sign Up
                         </Button>
                     </div>
                     <div className="mt-4 text-center text-sm">
-                        Don&apos;t have an account?{' '}
-                        <Link href="/signup" className="underline">
-                            Sign up
+                        Already have an account?{' '}
+                        <Link href="/login" className="underline">
+                            Log in
                         </Link>
                     </div>
                 </div>
             </div>
-            <div className="hidden bg-muted lg:block "
-                style={{ backgroundImage: "url('/logo1.png')" }}
-            >
-
-            </div>
         </div>
     );
 }
-
