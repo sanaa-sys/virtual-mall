@@ -34,3 +34,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.vs/VSWorkspaceState.json
+.vs/virtual-mall/v16/.suo

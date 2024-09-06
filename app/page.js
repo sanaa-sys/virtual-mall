@@ -17,38 +17,16 @@ export default function Login() {
   const { toast } = useToast();
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!email || !password) {
-      setError("Please fill out all fields.");
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: { error },
-      });
-      return;
+    const handleSubmit = async (e) => {
+        router.push('/dashboard');
     }
-    try {
-      const response = await axios.post("/api/login", { email, password });
-      console.log(response.data);
-      localStorage.setItem("token", response.data.token);
-      router.push("/dashboard");
-    } catch (err) {
-      setError("Login failed. Please check your credentials.");
-      console.error("Login error:", err);
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: { error },
-      });
-    }
-  };
 
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen">
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
-          <div className="grid gap-2 text-center">
+           <div className="grid gap-2 text-center">
+            <h1 className="text-3xl font-bold">Welcome to Virtual Mall</h1>
             <h1 className="text-3xl font-bold">Login</h1>
             <p className="text-balance text-muted-foreground">
               Enter your email below to login to your account
@@ -88,10 +66,9 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <div
-        className="hidden bg-muted lg:block "
-        style={{ backgroundImage: "url('/logo1.png')" }}
-      ></div>
+          <div className="container">
+              <img src="/logo1.png" alt="Logo" className="center" />
+          </div>
     </div>
   );
 }

@@ -14,51 +14,22 @@ export default function Signup() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const { toast } = useToast();
-    const router = useRouter();
 
+    const router = useRouter();
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!name || !email || !password) {
-            setError('Please fill out all fields.');
-            toast({
-                variant: 'destructive',
-                title: 'Uh oh! Something went wrong.',
-                description: { error },
-            });
-            return;
-        }
-        try {
-            const response = await axios.post('/api/signup', {
-                email,
-                password,
-                name,
-            });
-            console.log(response.data);
-            localStorage.setItem('token', response.data.token);
-            router.push('/dashboard');
-        } catch (err) {
-            setError('Signup failed. Please check your credentials.');
-            console.error('Signup error:', err);
-            toast({
-                variant: 'destructive',
-                title: 'Uh oh! Something went wrong.',
-                description: { error },
-            });
-        }
-    };
+        router.push('/dashboard');
+    }
+
 
     return (
         <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen">
-            <div className="hidden bg-muted lg:block "
-                style={{ backgroundImage: "url('/logo1.png')" }}
-            >
+            <div className="container">
+                <img src="/logo1.png" alt="Logo" className="center" />
             </div>{' '}
             <div className="flex items-center justify-center py-12">
                 <div className="mx-auto grid w-[350px] gap-6">
                     <div className="grid gap-2 text-center">
-                        <h1 className="text-3xl font-bold">Welcome to FeastFleet</h1>
+                        <h1 className="text-3xl font-bold">Welcome to Virtual Mall</h1>
                         <h1 className="text-3xl font-bold">Sign Up</h1>
                         <p className="text-balance text-muted-foreground">
                             Enter your email below to create an account
