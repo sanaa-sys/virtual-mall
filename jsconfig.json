@@ -1,13 +1,8 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "commonjs",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["*"], // Alias for all files
-      "@lib/*": ["src/lib/*"] // Specific alias for lib
+      "@/*": ["./app/*"] // Alias for all files
     }
-  },
-  "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  }
 }

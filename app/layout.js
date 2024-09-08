@@ -28,7 +28,6 @@ export default function RootLayout({ children }) {
 
         {/* Main Page Content */}
 
-        <NewProducts />
         {children}
       </body>
     </html>
