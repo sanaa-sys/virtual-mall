@@ -8,19 +8,34 @@ const NavBar = () => {
           <Link className="navbar__link relative" href="#">
             HOME
           </Link>
-          <Link className="navbar__link relative" href="#">
+          <Link
+            className="navbar__link relative"
+            href="http://localhost:3000/product"
+          >
             Products
           </Link>
-          <Link className="navbar__link relative" href="#">
+          <Link
+            className="navbar__link relative"
+            href="http://localhost:3000/order"
+          >
             Orders
           </Link>
-          <Link className="navbar__link relative" href="#">
+          <Link
+            className="navbar__link relative"
+            href="http://localhost:3000/dashboard"
+          >
             Dashboard
           </Link>
-          <Link className="navbar__link relative" href="#">
+          <Link
+            className="navbar__link relative"
+            href="http://localhost:3000/profile"
+          >
             Profile
           </Link>
-          <Link className="navbar__link relative" href="#">
+          <Link
+            className="navbar__link relative"
+            href="http://localhost:3000/contact"
+          >
             Contact
           </Link>
         </div>
