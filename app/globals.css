@@ -69,3 +69,28 @@
     @apply bg-background text-foreground;
   }
 }
+
+.headertop .header_top__icon_wrapper {
+  @apply bg-gray-200 rounded-md p-[6px] text-[14px] cursor-pointer hover:bg-accent hover:bg-indigo-200;
+}
+.navbar__link:hover {
+  color: #c7d2fe;
+  transition: all 0.4s;
+}
+.navbar__link::after {
+  color: #c7d2fe;
+  position: absolute;
+  content: "";
+  background-color: #c7d2fe;
+  height: 3px;
+  width: 100%;
+  bottom: -5px;
+  left: 0;
+  scale: 0;
+  transform-origin: left;
+  transition: all 0.4s;
+}
+
+.navbar__link:hover::after {
+  scale: 1;
+}
