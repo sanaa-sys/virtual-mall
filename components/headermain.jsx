@@ -12,7 +12,7 @@ const HeaderMain = () => {
           <img
             src="/logo1.png"
             alt="Logo"
-            className="center rounded pl-5"
+            className="center rounded-full pl-2"
             style={{ width: "100px", height: "100px" }}
           />
         </div>

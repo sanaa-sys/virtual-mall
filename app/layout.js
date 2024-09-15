@@ -1,10 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import HeaderTop from "../components/HeaderTop";
-// Import HeaderTop once
-import HeaderMain from "../components/headermain";
-import NavBar from "../components/navbar";
-import NewProducts from "../components/NewProducts";
+import ClientLayout from "../components/ClientLayout"; // Import the client-side layout
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,19 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* Top Header */}
-        <HeaderTop />
-
-        {/* Main Header */}
-        <HeaderMain />
-
-        {/* Navigation Bar */}
-        <NavBar />
-
-        {/* Main Page Content */}
-
-        <NewProducts />
-        {children}
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

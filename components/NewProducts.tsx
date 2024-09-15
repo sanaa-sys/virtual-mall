@@ -158,14 +158,14 @@ export default function ProductPage() {
                 <button
                   className="w-full transition-colors duration-300 ease-in-out flex items-center justify-center"
                   style={{
-                    backgroundColor: "#c7d2fe",
+                    backgroundColor: "#fed7aa",
                     transition: "background-color 0.3s ease-in-out",
                   }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.backgroundColor = "#a5b4fc")
+                    (e.currentTarget.style.backgroundColor = "#f97316")
                   } // New hover color
                   onMouseLeave={(e) =>
-                    (e.currentTarget.style.backgroundColor = "#c7d2fe")
+                    (e.currentTarget.style.backgroundColor = "#fed7aa")
                   } // Reset to original color
                 >
                   <ShoppingCart className="mr-2 h-4 w-4" />

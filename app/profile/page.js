@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 export default function Component() {
   return (
-    <Card className="w-full max-w-2xl mx-auto bg-gradient-to-tr from-indigo-200 via-zinc-50 to-indigo-300">
+    <Card className="w-full max-w-2xl mx-auto bg-gradient-to-tr from-zinc-50 to-orange-300">
       <CardHeader>
         <CardTitle>Edit Profile</CardTitle>
         <CardDescription>Update your profile information.</CardDescription>
