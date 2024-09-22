@@ -2,7 +2,7 @@
 import { useMotionValue } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import { useMotionTemplate, motion } from "framer-motion";
-import { cn } from "C:/Users/Touch Smart/virtual-mall/app/lib/utils";
+import { cn } from "app/lib/utils";
 
 export const EvervaultCard = ({ text, className }) => {
   let mouseX = useMotionValue(0);

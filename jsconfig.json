@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./app/*"] // Alias for all files
+      "@/*": ["./app*"] // Alias for all files
     }
   }
 }

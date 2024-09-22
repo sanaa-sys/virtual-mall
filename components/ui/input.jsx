@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "C:/Users/Touch Smart/virtual-mall/app/lib/utils";
+import { cn } from "app/lib/utils";
 
 const Input = React.forwardRef(({ className, type, ...props }, ref) => {
   return (

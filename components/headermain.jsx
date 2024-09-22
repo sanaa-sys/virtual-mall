@@ -6,7 +6,7 @@ import { BiUser } from "react-icons/bi";
 
 const HeaderMain = () => {
   return (
-      <div className="border-b border-gray-200 py-6 bg-orange-500">
+      <div className="border-b border-gray-200 py-6 bg-gradient-to-r from-blue-200 to-purple-300">
       <div className="container sm:flex juatify-between items-center">
         <div className="font-bold text-4xl text-center pb-2 sm:pb-0 text-blackish">
           <img

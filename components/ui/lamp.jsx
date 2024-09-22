@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { cn } from "C:/Users/Touch Smart/virtual-mall/app/lib/utils";
+import { cn } from "app/lib/utils";
 
 export default function LampDemo() {
   return (

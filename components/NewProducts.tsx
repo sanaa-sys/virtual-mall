@@ -99,7 +99,7 @@ const categories: Category[] = [
 
 export default function ProductPage() {
   return (
-      <div className="container mx-auto px-4 py-8 bg-orange-500">
+      <div className="container mx-auto px-4 py-8 bg-gradient-to-r from-blue-200 to-purple-300">
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-6 text-center">
           Product Categories
