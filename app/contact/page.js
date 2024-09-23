@@ -12,13 +12,10 @@ import Link from "next/link";
 
 export default function Component() {
   return (
-    <div className="container mx-auto max-w-3xl py-12 px-4 md:px-0 bg-gradient-to-tr from-zinc-50 to-orange-300">
+    <div className="container mx-auto max-w-3xl py-12 px-4 md:px-0  bg-orange-500">
       <div className="space-y-6">
         <div className="text-center">
           <h1 className="text-3xl font-bold">Contact Us</h1>
-          <p className="text-muted-foreground">
-            Get in touch with our team for any inquiries or feedback.
-          </p>
         </div>
         <Card>
           <CardContent className="space-y-4">
