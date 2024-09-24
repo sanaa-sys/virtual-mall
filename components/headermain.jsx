@@ -1,10 +1,11 @@
 // components/headermain.jsx
+"use client";
 import React from "react";
 import { BsSearch } from "react-icons/bs";
 import { FiHeart } from "react-icons/fi";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { BiUser } from "react-icons/bi";
-import { useRouter } from "next/router"; // Ensure you import useRouter
+import { useRouter } from "next/navigation"; // Ensure you import useRouter
 
 const HeaderMain = () => {
   const router = useRouter(); // Use useRouter here

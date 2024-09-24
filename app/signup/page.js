@@ -21,7 +21,7 @@ export default function Signup() {
   };
 
   return (
-      <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen bg-orange-500">
+      <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen bg-gradient-to-r from-blue-200 to-purple-300">
       <div className=" flex items-center justify-center h-screen">
         <img src="/logo1.png" alt="Logo" className="center rounded-full " />
       </div>{" "}
