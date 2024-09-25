@@ -4,6 +4,7 @@ import NewProducts from "../components/NewProducts";
 import Carousel from "@/components/ui/Carousel";
 import CategoryGrid from "@/components/ui/categories";
 import JustForYou from "@/components/ui/justforyou";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -17,7 +18,9 @@ export default function Home() {
       <br />
       <br />
       <br />
-      <JustForYou />
+          <JustForYou />
+          <br />
+      <Footer />
     </div>
   );
 }
