@@ -53,7 +53,7 @@ export default function Carousel() {
   };
 
   return (
-    <div className="relative w-full h-[300px] sm:h-[400px] overflow-hidden">
+    <div className="relative w-full h-[300px] sm:h-[400px] overflow-x: hidden">
       {banners.map((banner, index) => (
         <div
           key={banner.id}

@@ -5,11 +5,11 @@ import Carousel from "@/components/ui/Carousel";
 import CategoryGrid from "@/components/ui/categories";
 import JustForYou from "@/components/ui/justforyou";
 import Footer from "@/components/Footer";
+import "./globals.css";
 
 export default function Home() {
   return (
     <div className="bg-gradient-to-r from-blue-200 to-purple-300">
-      <HeaderMain />
       <Carousel />
       <br />
       <br />
@@ -18,8 +18,8 @@ export default function Home() {
       <br />
       <br />
       <br />
-          <JustForYou />
-          <br />
+      <JustForYou />
+      <br />
       <Footer />
     </div>
   );
