@@ -37,7 +37,13 @@ const NavBar = () => {
             href="http://localhost:3000/contact"
           >
             Contact
-          </Link>
+                  </Link>
+                  <Link
+                      className="navbar__link relative"
+                      href="http://localhost:3000/sell"
+                  >
+                      Sell
+                  </Link>
         </div>
       </div>
     </div>
