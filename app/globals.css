@@ -72,10 +72,10 @@
 }
 
 .headertop .header_top__icon_wrapper {
-  @apply bg-gray-200 rounded-md p-[6px] text-[14px] cursor-pointer hover:bg-accent hover:bg-orange-300;
+  @apply bg-gray-200 rounded-md p-[6px] text-[14px] cursor-pointer hover:bg-accent hover:to-blue-300;
 }
 .navbar__link:hover {
-  color: #fed7aa;
+  color: #a4ceed;
   transition: all 0.4s;
 }
 .navbar__link::after {

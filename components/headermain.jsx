@@ -37,7 +37,7 @@ const HeaderMain = () => {
           />
         </div>
 
-        <div className="hidden lg:flex gap-4 text-gray-500 text-[30px] pl-10">
+        <div className="hidden lg:flex gap-4 text-gray-500 text-[30px] pl-1">
           <BiUser
             onClick={() => handleRedirect("/signup")}
             className="cursor-pointer"
