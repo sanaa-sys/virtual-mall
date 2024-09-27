@@ -16,7 +16,7 @@ const products: Product[] = [
   {
     id: 1,
     name: "2 in 1 Baby Infant Food Fruits Soft Bite Nipple...",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/inafnt.jpeg",
     price: 389,
     originalPrice: 794,
     discount: 51,
@@ -26,7 +26,7 @@ const products: Product[] = [
   {
     id: 2,
     name: "AirPods_Pro Wireless Earbuds Bluetooth 5.0,...",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/airpords.jpeg",
     price: 1719,
     originalPrice: 4000,
     discount: 57,
@@ -36,7 +36,7 @@ const products: Product[] = [
   {
     id: 3,
     name: "NEW Original Air Pro 6 TWS Wireless...",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/pro.jpeg",
     price: 808,
     originalPrice: 1616,
     discount: 50,
@@ -46,7 +46,7 @@ const products: Product[] = [
   {
     id: 4,
     name: "Men Sport Watch Military Sports Watch Waterproo...",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/watch.jpeg",
     price: 336,
     originalPrice: 840,
     discount: 60,
@@ -56,7 +56,7 @@ const products: Product[] = [
   {
     id: 5,
     name: "GLUTAPONE Extreme Strong Whitenin...",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/gulap.jpeg",
     price: 730,
     originalPrice: 803,
     discount: 9,
@@ -66,7 +66,7 @@ const products: Product[] = [
   {
     id: 6,
     name: "Spigen PC Soft Phone Case for IPhone 11 14 12 1...",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/case.jpeg",
     price: 529,
     originalPrice: 2035,
     discount: 74,

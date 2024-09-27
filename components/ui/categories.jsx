@@ -2,14 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 const categories = [
-  { name: "Sunglasses", image: "/placeholder.svg?height=100&width=100" },
-  { name: "Mobiles", image: "/placeholder.svg?height=100&width=100" },
+  { name: "Sunglasses", image: "/sunglasses.jpeg" },
+  { name: "Mobiles", image: "/mobiles.jpeg" },
   {
     name: "Trash Bags & Liners",
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/trash.jpeg",
   },
-  { name: "Dog & Cat Beds", image: "/placeholder.svg?height=100&width=100" },
-  { name: "Tablets", image: "/placeholder.svg?height=100&width=100" },
+  { name: "Dog & Cat Beds", image: "/dog.jpeg" },
+  { name: "Tablets", image: "/tablet.jpeg" },
   {
     name: "Ventilation Parts & Accessories",
     image: "/placeholder.svg?height=100&width=100",
