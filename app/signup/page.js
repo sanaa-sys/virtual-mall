@@ -9,15 +9,39 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import React from "react";
 import SparklesPreview from "@/components/sparklescont";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "../lib/firebase";
 
 export default function Signup() {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const { toast } = useToast();
   const [password, setPassword] = useState("");
+  const [createUserWithEmailAndPassword] =
+    useCreateUserWithEmailAndPassword(auth);
 
   const router = useRouter();
-  const handleSubmit = async (e) => {
-    router.push("/dashboard");
+  const handleSignUp = async () => {
+    try {
+      const res = await createUserWithEmailAndPassword(email, password);
+      if (res) {
+        console.log("User created successfully:", res);
+        sessionStorage.setItem("user", true);
+        setEmail("");
+        setPassword("");
+        toast({
+          title: "Signup successful",
+          description: "Redirecting to dashboard...",
+        });
+        router.push("/product");
+      }
+    } catch (e) {
+      console.error("Signup error:", e);
+      toast({
+        title: "Signup failed",
+        description: e.message || "Please try again.",
+        status: "error",
+      });
+    }
   };
 
   return (
@@ -36,18 +60,8 @@ export default function Signup() {
           </div>
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <label htmlFor="email">Name</label>
-              <input
-                id="Name"
-                type="text"
-                placeholder="John Doe"
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <label htmlFor="email">Email</label>
-              <input
+              <Label htmlFor="email">Email</Label>
+              <Input
                 id="email"
                 type="email"
                 placeholder="m@example.com"
@@ -57,17 +71,16 @@ export default function Signup() {
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
-                <label htmlFor="password">Password</label>
+                <Label htmlFor="password">Password</Label>
               </div>
-              <input
+              <Input
                 id="password"
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full p-2 border rounded" // Adjust styling as needed
               />
             </div>
-            <Button type="submit" className="w-full" onClick={handleSubmit}>
+            <Button type="submit" className="w-full" onClick={handleSignUp}>
               Sign Up
             </Button>
           </div>
