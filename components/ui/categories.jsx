@@ -12,30 +12,30 @@ const categories = [
   { name: "Tablets", image: "/tablet.jpeg" },
   {
     name: "Ventilation Parts & Accessories",
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/ventilation.jpg",
   },
-  { name: "Starter Kits", image: "/placeholder.svg?height=100&width=100" },
+  { name: "Starter Kits", image: "/starter.jpeg" },
   {
     name: "Blocks & Building Toys",
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/blocks.jpeg",
   },
   {
     name: "Knife Sharpeners & Blocks",
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/knife.jpeg",
   },
   {
     name: "Comforters, Quilts & Duvets",
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/duvets.jpeg",
   },
-  { name: "Microphones", image: "/placeholder.svg?height=100&width=100" },
-  { name: "Zakat", image: "/placeholder.svg?height=100&width=100" },
-  { name: "Stud earrings", image: "/placeholder.svg?height=100&width=100" },
+  { name: "Microphones", image: "/microphones.jpeg" },
+  { name: "Jewelery", image: "/jewelery.jpeg" },
+  { name: "Cuff Links", image: "/cuff.jpeg" },
   {
     name: "Shower Caddies & Hangers",
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/hanger.jpeg",
   },
-  { name: "Stickers & Labels", image: "/placeholder.svg?height=100&width=100" },
-  { name: "Dining Sets", image: "/placeholder.svg?height=100&width=100" },
+  { name: "Stickers & Labels", image: "/stickers.jpeg" },
+  { name: "Dinner Sets", image: "/dinner.jpeg" },
 ];
 
 export default function CategoryGrid() {
