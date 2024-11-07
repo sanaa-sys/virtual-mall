@@ -194,7 +194,11 @@ export default function Order() {
               <Card x-chunk="dashboard-05-chunk-1">
                 <CardHeader className="pb-2">
                   <CardDescription>This Week</CardDescription>
-                  <CardTitle className="text-4xl">$1,329</CardTitle>
+                  <h1>
+                    <b>
+                      <strong>$1,329</strong>
+                    </b>
+                  </h1>
                 </CardHeader>
                 <CardContent>
                   <div className="text-xs text-muted-foreground">
@@ -208,7 +212,11 @@ export default function Order() {
               <Card x-chunk="dashboard-05-chunk-2">
                 <CardHeader className="pb-2">
                   <CardDescription>This Month</CardDescription>
-                  <CardTitle className="text-4xl">$5,329</CardTitle>
+                  <h1>
+                    <b>
+                      <strong>$5,329</strong>
+                    </b>
+                  </h1>
                 </CardHeader>
                 <CardContent>
                   <div className="text-xs text-muted-foreground">
