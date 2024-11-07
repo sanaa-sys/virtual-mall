@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import axios from "axios";
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
+import { auth } from '../lib/firebase'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,13 +16,24 @@ import SparklesPreview from "@/components/sparklescont";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+ const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const { toast } = useToast();
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
-    router.push("/dashboard");
-  };
+    const handleSignIn = async () => {
+        try {
+            const res = await signInWithEmailAndPassword(email, password);
+            console.log({ res });
+            sessionStorage.setItem('user', true)
+            setEmail('');
+            setPassword('');
+            toast({ title: "Login successful", description: "Redirecting to dashboard..." });
+            router.push("/product");
+        } catch (e) {
+            console.error(e)
+            toast({ title: "Signup failed", description: e.message || "Please try again.", status: "error" });
+        }
+    };
 
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen bg-gradient-to-tr from-indigo-200 via-zinc-50 to-indigo-300">
@@ -60,7 +72,7 @@ export default function Login() {
               />
             </div>
 
-            <Button type="submit" className="w-full" onClick={handleSubmit}>
+           <Button type="submit" className="w-full" onClick={handleSignIn}>
               Login
             </Button>
           </div>
