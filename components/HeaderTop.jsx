@@ -41,9 +41,10 @@ const HeaderTop = () => {
             </div>
           </div>
 
-          <div className="text-black  pr-10 text-5xl font-extrabold ">
+          <div className="text-black pr-10 text-5xl font-extrabold overflow-hidden">
             Virtual Mall Lahore
           </div>
+
           <div className="flex-gap-4 pr-10 ">
             <select
               className="text-black text-[12px] w-[70px] "

@@ -95,3 +95,6 @@
 .navbar__link:hover::after {
   scale: 1;
 }
+.scrollable-contents {
+  overflow-y: hidden;
+}

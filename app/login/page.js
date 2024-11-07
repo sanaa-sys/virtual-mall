@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import React from "react";
+//import "../globals.css";
 
 import SparklesPreview from "@/components/sparklescont";
 
@@ -35,26 +36,30 @@ export default function Login() {
           </div>
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
+              <label htmlFor="email">Email</label>
+              <input
                 id="email"
                 type="email"
                 placeholder="m@example.com"
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="w-full p-2 border rounded" // You can style it as needed
               />
             </div>
+
             <div className="grid gap-2">
               <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
+                <label htmlFor="password">Password</label>
               </div>
-              <Input
+              <input
                 id="password"
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="w-full p-2 border rounded" // Adjust styling as needed
               />
             </div>
+
             <Button type="submit" className="w-full" onClick={handleSubmit}>
               Login
             </Button>

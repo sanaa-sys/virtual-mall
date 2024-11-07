@@ -17,15 +17,15 @@ const HeaderMain = () => {
   return (
     <div className="border-b border-gray-200 py-6 bg-gradient-to-r from-blue-200 to-purple-300">
       <div className="container sm:flex justify-between items-center">
-        <div className="font-bold text-4xl text-center pb-2 sm:pb-0 text-blackish">
+        <div className="font-bold text-4xl text-center pr-3 pb-2 sm:pb-0 text-blackish">
           <img
             src="/logo1.png"
             alt="Logo"
             className="center rounded-full pl-2"
-            style={{ width: "100px", height: "100px" }}
+            style={{ width: "150px", height: "150px" }}
           />
         </div>
-        <div className="w-full sm:w-[300px] md:w-[70%] pl-32 relative">
+        <div className="w-full sm:w-[300px] md:w-[70%] pl-2 relative">
           <input
             className="border-gray-200 border p-2 px-4 rounded-lg w-full"
             type="text"
