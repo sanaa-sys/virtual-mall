@@ -21,7 +21,7 @@ export default function Signup() {
   };
 
   return (
-      <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen bg-gradient-to-r from-blue-200 to-purple-300">
+    <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen bg-gradient-to-r from-blue-200 to-purple-300">
       <div className=" flex items-center justify-center h-screen">
         <img src="/logo1.png" alt="Logo" className="center rounded-full " />
       </div>{" "}
@@ -36,8 +36,8 @@ export default function Signup() {
           </div>
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="Name">Name</Label>
-              <Input
+              <label htmlFor="email">Name</label>
+              <input
                 id="Name"
                 type="text"
                 placeholder="John Doe"
@@ -46,8 +46,8 @@ export default function Signup() {
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
+              <label htmlFor="email">Email</label>
+              <input
                 id="email"
                 type="email"
                 placeholder="m@example.com"
@@ -57,13 +57,14 @@ export default function Signup() {
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
+                <label htmlFor="password">Password</label>
               </div>
-              <Input
+              <input
                 id="password"
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="w-full p-2 border rounded" // Adjust styling as needed
               />
             </div>
             <Button type="submit" className="w-full" onClick={handleSubmit}>

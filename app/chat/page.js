@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   Bird,
   Book,
@@ -16,10 +16,10 @@ import {
   SquareUser,
   Triangle,
   Turtle,
-} from 'lucide-react';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+} from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerContent,
@@ -27,56 +27,56 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from '@/components/ui/drawer';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/drawer";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
   TooltipProvider,
-} from '@/components/ui/tooltip';
-import axios from 'axios';
-import { useToast } from '@/components/ui/use-toast';
-import { useEffect, useState } from 'react';
+} from "@/components/ui/tooltip";
+import axios from "axios";
+import { useToast } from "@/components/ui/use-toast";
+import { useEffect, useState } from "react";
 
 export default function Dashboard() {
   const [messages, setMessages] = useState([]);
 
   const { toast } = useToast();
-  const [chatName, setChatName] = useState('');
-  const [message, setMeassge] = useState('');
-  const [sysmsg, setSysmsg] = useState('');
-  const [chatModel, setChatModel] = useState('gpt-3.5-turbo-0125');
+  const [chatName, setChatName] = useState("");
+  const [message, setMeassge] = useState("");
+  const [sysmsg, setSysmsg] = useState("");
+  const [chatModel, setChatModel] = useState("gpt-3.5-turbo-0125");
   const [temperature, setTemperature] = useState(0);
   const chatbotId = 2;
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedToken = localStorage.getItem('token');
+    if (typeof window !== "undefined") {
+      const storedToken = localStorage.getItem("token");
       setToken(storedToken);
     }
   }, []);
 
   const sendMessage = async (e) => {
-    console.log('sendMessage');
+    console.log("sendMessage");
     console.log(message);
-    console.log('messages');
+    console.log("messages");
     if (!message) return;
-    setMessages([...messages, { role: 'user', content: message }]);
-    setMeassge('');
+    setMessages([...messages, { role: "user", content: message }]);
+    setMeassge("");
     try {
       const response = await axios.post(
-        '/api/send-message',
+        "/api/send-message",
         { messages, model: chatModel, temperature, sysmsg, chatbotId },
         {
           headers: {
@@ -84,12 +84,12 @@ export default function Dashboard() {
           },
         }
       );
-      setMessages([...messages, { role: 'assistant', content: response.data }]);
+      setMessages([...messages, { role: "assistant", content: response.data }]);
     } catch (error) {
       toast({
-        title: 'Error',
+        title: "Error",
         message: error.response.data.message,
-        type: 'error',
+        type: "error",
       });
     }
   };
@@ -285,7 +285,7 @@ export default function Dashboard() {
                           <Rabbit className="size-5" />
                           <div className="grid gap-0.5">
                             <p>
-                              GPT{' '}
+                              GPT{" "}
                               <span className="font-medium text-foreground">
                                 4 Mini
                               </span>
@@ -301,7 +301,7 @@ export default function Dashboard() {
                           <Bird className="size-5" />
                           <div className="grid gap-0.5">
                             <p>
-                              GPT{' '}
+                              GPT{" "}
                               <span className="font-medium text-foreground">
                                 3.5 Turbo
                               </span>
@@ -317,7 +317,7 @@ export default function Dashboard() {
                           <Turtle className="size-5" />
                           <div className="grid gap-0.5">
                             <p>
-                              GPT{' '}
+                              GPT{" "}
                               <span className="font-medium text-foreground">
                                 4 Turbo
                               </span>
@@ -342,7 +342,7 @@ export default function Dashboard() {
                     min="0"
                     max="1"
                     step="0.1"
-                  />{' '}
+                  />{" "}
                 </div>
               </fieldset>
               <fieldset className="grid gap-6 rounded-lg border p-4">

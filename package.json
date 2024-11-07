@@ -9,9 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@botpress/webchat": "^2.3.1",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@heroicons/react": "^2.1.5",
     "@langchain/openai": "^0.2.6",
     "@langchain/textsplitters": "^0.0.3",
+    "@mui/material": "^6.1.6",
     "@prisma/client": "^5.18.0",
     "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-checkbox": "^1.1.1",
@@ -43,7 +47,7 @@
     "jsonwebtoken": "^9.0.2",
     "langchain": "^0.2.15",
     "lucide-react": "^0.427.0",
-    "next": "14.2.5",
+    "next": "^15.0.3",
     "openai": "^4.55.4",
     "pdf-lib": "^1.17.1",
     "pdf-parse": "^1.1.1",

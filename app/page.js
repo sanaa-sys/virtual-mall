@@ -4,6 +4,7 @@ import NewProducts from "../components/NewProducts";
 import Carousel from "@/components/ui/Carousel";
 import CategoryGrid from "@/components/ui/categories";
 import JustForYou from "@/components/ui/justforyou";
+import Chatbot from "@/components/ui/chat";
 import Footer from "@/components/Footer";
 import "./globals.css";
 
@@ -19,6 +20,8 @@ export default function Home() {
       <br />
       <br />
       <JustForYou />
+      <br />
+      <Chatbot />
       <br />
       <Footer />
     </div>
