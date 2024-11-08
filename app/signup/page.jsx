@@ -1,4 +1,3 @@
-// pages/index.js
 "use client";
 import Link from "next/link";
 import { useState } from "react";
@@ -11,11 +10,9 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import SparklesPreview from "@/components/sparklescont";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from ".//lib/firebase";
-import "./globals.css";
+import { auth } from "../lib/firebase";
 
-
-export default function Home() {
+export default function Signup() {
     const [email, setEmail] = useState("");
     const { toast } = useToast();
     const [password, setPassword] = useState("");
@@ -98,3 +95,4 @@ export default function Home() {
         </div>
     );
 }
+

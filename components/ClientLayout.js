@@ -11,18 +11,8 @@ export default function ClientLayout({ children }) {
 
   return (
     <>
-      {!isHiddenPage && (
-        <>
-          {/* Top Header */}
-          <HeaderTop />
 
-          {/* Main Header */}
-          <HeaderMain />
 
-          {/* Navigation Bar */}
-          <NavBar />
-        </>
-      )}
       {/* Main Page Content */}
       {children}
     </>

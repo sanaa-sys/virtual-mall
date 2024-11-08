@@ -28,7 +28,7 @@ export default function Login() {
             setEmail('');
             setPassword('');
             toast({ title: "Login successful", description: "Redirecting to dashboard..." });
-            router.push("/product");
+            router.push("/home");
         } catch (e) {
             console.error(e)
             toast({ title: "Signup failed", description: e.message || "Please try again.", status: "error" });
