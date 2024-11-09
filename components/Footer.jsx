@@ -22,7 +22,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="http://localhost:3000/faq"
+                  href="https://virtual-mall-phi.vercel.app/faq"
                   className="hover:text-primary transition-transform transform hover:scale-105 transition-colors"
                 >
                   FAQ
@@ -30,7 +30,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="http://localhost:3000/return"
+                  href="https://virtual-mall-phi.vercel.app/return"
                   className="hover:text-primary transition-transform transform hover:scale-105 transition-colors"
                 >
                   Shipping & Returns
