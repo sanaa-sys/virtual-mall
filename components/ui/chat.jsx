@@ -16,16 +16,21 @@ export default function Chatbot() {
   const [input, setInput] = useState("");
   const [answer, setAnswer] = useState("loading");
 
+  const formatMessageContent = (text) => {
+        return text.replace(/([.!?])\s*(?=[A-Z])/g, "$1\n\n"); // Add line breaks after sentences
+    };
+
   async function generateAnswer(question) {
     try {
       const response = await axios({
-        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=GEMINI_API_KEY", // Use your API Key here
+          url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyATGXWqRERgnmJp_EZsB22MAnv0SgspzMg", // Use your API Key here
         method: "post",
         data: {
           contents: [{ parts: [{ text: question }] }], // Send question to API
         },
       });
-      return response.data.candidates[0].content.parts[0].text;
+        return response.data.candidates[0].content.parts[0].text;
+      
     } catch (error) {
       console.error("Error generating response:", error);
       return "Sorry, I couldn't process your request.";
@@ -34,11 +39,12 @@ export default function Chatbot() {
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (input.trim()) {
-      setMessages([...messages, { text: input, sender: "user" }]);
+      if (input.trim()) {
+          const formattedMessage = formatMessageContent(input);
+          setMessages([...messages, { text: formattedMessage, sender: "user" }]);
 
       // Call generateAnswer to get a response from the API
-      const botResponse = await generateAnswer(input);
+          const botResponse = await generateAnswer(formattedMessage);
 
       setMessages((prev) => [...prev, { text: botResponse, sender: "bot" }]);
 
