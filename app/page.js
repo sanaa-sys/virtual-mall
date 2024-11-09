@@ -9,9 +9,8 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import React from "react";
-import SparklesPreview from "@/components/sparklescont";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from ".//lib/firebase";
+import { auth } from "./lib/firebase"; //Assuming the file is in the root `lib` directory
 import "./globals.css";
 
 export default function Home() {

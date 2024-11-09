@@ -9,31 +9,27 @@ import Footer from "@/components/Footer";
 import HeaderTop from "@/components/ui/HeaderTop";
 import NavBar from "@/components/ui/navbar";
 
-
 export default function Home() {
-    return (
-        <div className="bg-gradient-to-r from-blue-200 to-purple-300">
-            {/* Top Header */}
-            <HeaderTop />
+  return (
+    <div className="bg-gradient-to-r from-blue-200 to-purple-300">
+      <HeaderTop />
 
-            {/* Main Header */}
-            <HeaderMain />
+      <HeaderMain />
 
-            {/* Navigation Bar */}
-            <NavBar />
-            <Carousel />
-            <br />
-            <br />
-            <br />
-            <CategoryGrid />
-            <br />
-            <br />
-            <br />
-            <JustForYou />
-            <br />
-            <Chatbot />
-            <br />
-            <Footer />
-        </div>
-    );
+      <NavBar />
+      <Carousel />
+      <br />
+      <br />
+      <br />
+      <CategoryGrid />
+      <br />
+      <br />
+      <br />
+      <JustForYou />
+      <br />
+      <Chatbot />
+      <br />
+      <Footer />
+    </div>
+  );
 }

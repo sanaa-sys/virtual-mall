@@ -7,18 +7,18 @@ const NavBar = () => {
         <div className="flex w-fit gap-10 mx-auto font-medium py-5 text-blackish">
           <Link
             className="navbar__link relative overflow-hidden"
-            href="http://localhost:3000"
+            href="http://localhost:3000/home"
           >
             Home
           </Link>
-          
+
           <Link
             className="navbar__link relative overflow-hidden"
             href="http://localhost:3000/order"
           >
             Orders
           </Link>
-          
+
           <Link
             className="navbar__link relative overflow-hidden"
             href="http://localhost:3000/profile"
