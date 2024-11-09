@@ -19,7 +19,7 @@ export default function Chatbot() {
   async function generateAnswer(question) {
     try {
       const response = await axios({
-        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=YOUR_API_KEY", // Use your API Key here
+        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=GEMINI_API_KEY", // Use your API Key here
         method: "post",
         data: {
           contents: [{ parts: [{ text: question }] }], // Send question to API
