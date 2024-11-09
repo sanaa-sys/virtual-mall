@@ -79,8 +79,8 @@ export default function SellPage() {
                     Ready to Start Selling?
                   </h2>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Join thousands of successful sellers on our platform. It's
-                    quick and easy to get started.
+                    Join thousands of successful sellers on our platform.
+                    It&apos;s quick and easy to get started.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
