@@ -84,11 +84,11 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <div1>
+      <div>
         <div className="flex items-center justify-center h-screen">
           <img src="/logo1.png" alt="Logo" className="center rounded-full " />
         </div>
-      </div1>
+      </div>
     </div>
   );
 }
