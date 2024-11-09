@@ -35,8 +35,8 @@ export default function ShippingAndReturnsPage() {
             <div className="mt-2 max-w-xl text-sm text-gray-500">
               <p className="mb-2">
                 We want you to be completely satisfied with your purchase. If
-                you're not happy with your order, you can return it within 30
-                days of receipt for a full refund or exchange.
+                you&apos;re not happy with your order, you can return it within
+                30 days of receipt for a full refund or exchange.
               </p>
               <p>
                 To be eligible for a return, your item must be unused and in the
@@ -79,7 +79,7 @@ export default function ShippingAndReturnsPage() {
                 If your return is approved, we will initiate a refund to your
                 credit card (or original method of payment). You will receive
                 the credit within a certain amount of days, depending on your
-                card issuer's policies.
+                card issuer&apos;s policies.
               </p>
             </div>
           </div>
