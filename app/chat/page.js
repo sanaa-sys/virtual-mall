@@ -230,7 +230,9 @@ export default function Dashboard() {
       </aside>
       <div className="flex flex-col">
         <header className="sticky top-0 z-10 flex h-[8vh] items-center gap-1 border-b bg-background px-4">
-          <h1 className="text-xl font-semibold">{chatName}'s Playground</h1>
+          <h1 className="text-xl font-semibold">
+            {chatName}&apos;s Playground
+          </h1>
           <Drawer>
             <DrawerTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
