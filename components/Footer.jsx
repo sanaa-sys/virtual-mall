@@ -46,7 +46,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="http://localhost:3000/privacy"
+                  href="https://virtual-mall-phi.vercel.app/privacy"
                   className="hover:text-primary transition-transform transform hover:scale-105 transition-colors"
                 >
                   Privacy Policy
