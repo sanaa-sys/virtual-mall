@@ -16,6 +16,10 @@ export default function Chatbot() {
   const [input, setInput] = useState("");
   const [answer, setAnswer] = useState("loading");
 
+  const formatMessageContent = (text) => {
+    return text.replace(/([.!?])\s*(?=[A-Z])/g, "$1\n\n"); // Add line breaks after sentences
+  };
+
   async function generateAnswer(question) {
     try {
       const response = await axios({
@@ -35,10 +39,11 @@ export default function Chatbot() {
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (input.trim()) {
-      setMessages([...messages, { text: input, sender: "user" }]);
+      const formattedMessage = formatMessageContent(input);
+      setMessages([...messages, { text: formattedMessage, sender: "user" }]);
 
       // Call generateAnswer to get a response from the API
-      const botResponse = await generateAnswer(input);
+      const botResponse = await generateAnswer(formattedMessage);
 
       setMessages((prev) => [...prev, { text: botResponse, sender: "bot" }]);
 
