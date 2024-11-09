@@ -94,7 +94,7 @@ const categories = {
         {
             "id": "baby",
             "name": "Baby",
-            "image": "/baby.jpg",
+            "image": "/babyjpg.jpg",
             "subcategories": [
                 { "id": "baby_clothing", "name": "Baby Clothing" },
                 { "id": "diapers_wipes", "name": "Diapers & Wipes" },
@@ -127,7 +127,7 @@ const categories = {
         {
             "id": "pet_supplies",
             "name": "Pet Supplies",
-            "image": "/dog.jpg",
+            "image": "/dog.jpeg",
             "subcategories": [
                 { "id": "dog_supplies", "name": "Dog Supplies" },
                 { "id": "cat_supplies", "name": "Cat Supplies" },
