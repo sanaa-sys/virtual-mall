@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
-import { auth } from '../lib/firebase'
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "../lib/firebase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,30 +10,25 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import React from "react";
 //import "../globals.css";
-
-import SparklesPreview from "@/components/sparklescont";
+//import SparklesPreview from "@/components/sparklescont";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
- const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const { toast } = useToast();
-  const router = useRouter();
+  const router = useRouter(); // Using Next.js router
 
-    const handleSignIn = async () => {
-        try {
-            const res = await signInWithEmailAndPassword(email, password);
-            console.log({ res });
-            sessionStorage.setItem('user', true)
-            setEmail('');
-            setPassword('');
-            toast({ title: "Login successful", description: "Redirecting to dashboard..." });
-            router.push("/home");
-        } catch (e) {
-            console.error(e)
-            toast({ title: "Signup failed", description: e.message || "Please try again.", status: "error" });
-        }
-    };
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(email, password);
+      alert("Logged in successfully!");
+      router.push("/home"); // Navigate using Next.js router
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen bg-gradient-to-tr from-indigo-200 via-zinc-50 to-indigo-300">
@@ -72,23 +67,23 @@ export default function Login() {
               />
             </div>
 
-           <Button type="submit" className="w-full" onClick={handleSignIn}>
+            <Button type="submit" className="w-full" onClick={handleLogin}>
               Login
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}
-            <Link href="/signup" className="underline">
+            <Link href="/" className="underline">
               Sign up
             </Link>
           </div>
         </div>
       </div>
-      <div1>
+      <div>
         <div className="flex items-center justify-center h-screen">
           <img src="/logo1.png" alt="Logo" className="center rounded-full " />
         </div>
-      </div1>
+      </div>
     </div>
   );
 }
