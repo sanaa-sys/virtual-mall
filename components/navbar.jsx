@@ -8,9 +8,7 @@ const NavBar = () => {
           <Link
             className="navbar__link relative overflow-hidden"
             href="http://localhost:3000/home"
-          >
-            Home
-          </Link>
+          ></Link>
 
           <Link
             className="navbar__link relative overflow-hidden"

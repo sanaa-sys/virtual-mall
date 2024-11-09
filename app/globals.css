@@ -75,7 +75,7 @@
   @apply bg-gray-200 rounded-md p-[6px] text-[14px] cursor-pointer hover:bg-accent hover:to-blue-300;
 }
 .navbar__link:hover {
-  color: #a4ceed;
+  color: #dadfe2;
   transition: all 0.4s;
 }
 .navbar__link::after {
