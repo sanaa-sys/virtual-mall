@@ -22,6 +22,7 @@ const ProductCard = ({ product }) => {
           alt={name}
           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
           onError={(e) => {
+            // Use fallback image if the image fails to load
             if (e.target.src !== "https://via.placeholder.com/384x224") {
               e.target.src = "https://via.placeholder.com/384x224";
             }
@@ -30,9 +31,11 @@ const ProductCard = ({ product }) => {
       </div>
       <div className="p-5">
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-          {name}
+          {/* Escape quotes or special characters */}
+          {name.replace(/"/g, "&quot;")}
         </h5>
         <p className="mb-3 font-normal text-gray-700">
+          {/* If description is long, truncate it */}
           {description && description.length > 100
             ? `${description.substring(0, 100)}...`
             : description}
