@@ -1,5 +1,8 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from 'next/navigation'
+import { useAppContext } from "../../context/AppContext";
 
 const categories = {
     "category": [
@@ -199,18 +202,21 @@ const categories = {
 
 
 export default function CategoryGrid() {
+    const { category, setCategory } = useAppContext();
+    const router = useRouter();
+    const handleCategoryClick = (categoryName) =>
+    {
+        const formattedName = categoryName.toLowerCase().replace(/\s+/g, '-');
+        router.push(`/catalog/${formattedName}`);
+        setCategory(formattedName);
+        console.log(category);
+    };
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-3xl font-semibold mb-6 text-white">Categories</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4">
               {categories.category.map((category, index) => (
-          <Link
-            key={index}
-            href={`/category/${category.name
-              .toLowerCase()
-              .replace(/\s+/g, "-")}`}
-            className="group block"
-          >
+                  <div key={index} onClick={() => handleCategoryClick(category.name)} className="group block cursor-pointer" >
             <div className="bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg h-full flex flex-col">
               <div className="aspect-square relative overflow-hidden rounded-t-lg">
                 <Image
@@ -227,7 +233,7 @@ export default function CategoryGrid() {
                 </h3>
               </div>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
     </div>

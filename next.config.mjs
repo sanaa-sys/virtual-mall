@@ -37,6 +37,16 @@ const nextConfig = {
     // Increase the number of pages that should be kept simultaneously in memory
     pagesBufferLength: 5,
   },
+    // Add async rewrites function for custom routing
+  async rewrites() {
+    return [
+      {
+        source: '/catalog/:category',
+        destination: '/catalog?category=:category',
+      },
+      // Add more rewrite rules as needed
+    ];
+  }
 };
 
 export default nextConfig;
