@@ -52,17 +52,18 @@ const ProductList = () => {
   }
 
   return (
-    <div className="bg-gradient-to-r from-blue-200 to-purple-300">
-      <Container>
-        <Grid container spacing={4}>
-          {products.map((product) => (
-            <Grid item xs={12} sm={6} md={4} key={product.id}>
-              <ProductCard product={product} />
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-    </div>
+      <div className="bg-gradient-to-r from-blue-200 to-purple-300">
+          <Container>
+              <Grid container spacing={4}>
+                  {products.map((product) => (
+                      <Grid item xs={12} sm={6} md={4} key={product.id}>
+                          <ProductCard product={product} />
+                      </Grid>
+                  ))}
+              </Grid>
+          </Container>
+      </div>
+       
   );
 };
 
