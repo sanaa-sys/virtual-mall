@@ -79,7 +79,7 @@ const ProductCard = ({ product }) => {
           </span>
         </div>
         <div className="flex gap-2 w-full">
-          /* eslint-disable react/no-unescaped-entities */
+          {/* eslint-disable react/no-unescaped-entities */}
           <Button
             onClick={() => addToCart(product)}
             className="flex-1"
@@ -97,7 +97,7 @@ const ProductCard = ({ product }) => {
             <Heart className="w-4 h-4 mr-2" />
             Wishlist
           </Button>
-          /* eslint-enable react/no-unescaped-entities */
+          {/* eslint-enable react/no-unescaped-entities */}
         </div>
       </CardFooter>
     </Card>
