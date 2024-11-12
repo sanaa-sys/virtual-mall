@@ -79,10 +79,11 @@ const ProductCard = ({ product }) => {
           </span>
         </div>
         <div className="flex gap-2 w-full">
+          /* eslint-disable react/no-unescaped-entities */
           <Button
             onClick={() => addToCart(product)}
             className="flex-1"
-            aria-label={"Add " + (product.title || "Product") + " to cart"} // Concatenation method
+            aria-label={`Add ${product.title} to cart`}
           >
             <ShoppingCart className="w-4 h-4 mr-2" />
             Add to Cart
@@ -91,11 +92,12 @@ const ProductCard = ({ product }) => {
             onClick={() => addToWishlist(product)}
             variant="outline"
             className="flex-1"
-            aria-label={"Add " + (product.title || "Product") + " to wishlist"} // Concatenation method
+            aria-label={`Add ${product.title} to wishlist`}
           >
             <Heart className="w-4 h-4 mr-2" />
             Wishlist
           </Button>
+          /* eslint-enable react/no-unescaped-entities */
         </div>
       </CardFooter>
     </Card>
