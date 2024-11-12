@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { collection, query, where, getDocs, limit } from "firebase/firestore"; // Import 'limit' here
 import { db } from "app/lib/firebase"; // Ensure the path is correct for your Firebase setup
 import ProductCard from "@/components/ui/productCard"; // Import the ProductCard component
+import Fuse from "fuse.js";
 
 const HeaderMain = () => {
   const router = useRouter();
@@ -17,33 +18,60 @@ const HeaderMain = () => {
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0); // State for active suggestion index
 
   // Function to handle input changes for autocomplete
+
   const handleAutocomplete = async (e) => {
-    const value = e.target.value.toLowerCase(); // Convert input to lowercase
+    const value = e.target.value.toLowerCase();
     setSearchTerm(value); // Update the search term
 
-    // If the input has 3 or more characters, fetch suggestions from Firestore
     if (value.length >= 3) {
       try {
         const productsRef = collection(db, "products");
+        const querySnapshot = await getDocs(productsRef);
 
-        // Query to search products based on name starting with the input
-        const q = query(
-          productsRef,
-          where("name", ">=", value), // Starts with input value (in lowercase)
-          where("name", "<=", value + "\uf8ff"), // Prefix matching
-          limit(10) // Limit the number of suggestions to 10
+        const products = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            ...data,
+            name: data.name?.toLowerCase() || "", // Ensure name is lowercase
+            keyword: Array.isArray(data.keyword)
+              ? data.keyword.map((kw) => kw.toLowerCase())
+              : [], // Ensure keyword field is lowercase and an array
+          };
+        });
+
+        console.log("Fetched products:", products);
+
+        // Enhanced debugging to see the keywords array for each product
+        products.forEach((product) => {
+          console.log(`Product: ${product.name}, Keyword: ${product.keyword}`);
+        });
+
+        // Use partial match instead of exact match for keywords
+        const exactMatches = products.filter((product) =>
+          product.keyword.some((kw) => kw.includes(value))
         );
 
-        const querySnapshot = await getDocs(q);
-        const suggestionsList = querySnapshot.docs.map(
-          (doc) => doc.data().name
-        ); // Map to product names
-        setSuggestions(suggestionsList); // Set suggestions to state
+        console.log("Exact matches for:", value, exactMatches);
+
+        if (exactMatches.length === 0) {
+          // If no exact matches, use Fuse.js for fuzzy search
+          const fuse = new Fuse(products, {
+            keys: ["name", "keyword"], // Search in both fields
+            threshold: 0.3, // Adjust the threshold for fuzziness
+          });
+
+          const results = fuse.search(value);
+          const suggestionsList = results.map((result) => result.item.name);
+          setSuggestions(suggestionsList);
+        } else {
+          const suggestionsList = exactMatches.map((product) => product.name);
+          setSuggestions(suggestionsList);
+        }
       } catch (error) {
         console.error("Error fetching suggestions:", error);
       }
     } else {
-      setSuggestions([]); // Clear suggestions if input is less than 3 characters
+      setSuggestions([]); // Clear suggestions if less than 3 characters
     }
   };
 
