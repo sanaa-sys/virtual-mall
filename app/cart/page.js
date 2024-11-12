@@ -11,19 +11,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useAppContext } from "../../context/AppContext";
 
-// This would typically come from your global state management (e.g., Redux, Context API)
-const initialCartItems = [
-  { id: 1, name: "Product 1", price: 19.99, quantity: 2 },
-  { id: 2, name: "Product 2", price: 29.99, quantity: 1 },
-];
+
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState(initialCartItems);
+    const { cart, setCart} = useAppContext();
 
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity >= 0) {
-      setCartItems((items) =>
+      setCart((items) =>
         items.map((item) =>
           item.id === id ? { ...item, quantity: newQuantity } : item
         )
@@ -32,17 +29,17 @@ export default function CartPage() {
   };
 
   const removeItem = (id) => {
-    setCartItems((items) => items.filter((item) => item.id !== id));
+    setCart((items) => items.filter((item) => item.id !== id));
   };
 
-  const subtotal = cartItems.reduce(
+  const subtotal = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
   const tax = subtotal * 0.1; // Assuming 10% tax
   const total = subtotal + tax;
 
-  if (cartItems.length === 0) {
+  if (cart.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
         <h1 className="text-2xl font-bold mb-4">Your cart is empty</h1>
@@ -67,7 +64,7 @@ export default function CartPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {cartItems.map((item) => (
+              {cart.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell>{item.name}</TableCell>
                   <TableCell>${item.price.toFixed(2)}</TableCell>

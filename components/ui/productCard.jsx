@@ -5,35 +5,31 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Star, ShoppingCart, Heart } from "lucide-react"
+import { useAppContext } from "../../context/AppContext";
+import { useRouter } from "next/navigation";
 const ProductCard = ({ product }) => {
+    const router = useRouter(); 
+    const { cart, setCart, wishlist, setWishlist } = useAppContext();
 
-    const [cart, setCart] = useState([]);
-    const [wishlist, setWishlist] = useState([]);
+    const addToCart = (product) => {
 
-    const addToCart = (productId) => {
-        setCart([...cart, productId])
-        toast.success('Added to cart!', {
-            position: "bottom-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        })
+        const existingProduct = cart.find(item => item.id === product.id);
+        let quantity = 1;
+
+        if (existingProduct) {
+            quantity = existingProduct.quantity + 1;
+        }
+
+        // Use the 'quantity' variable to add or update the product in the cart
+        setCart([...cart, { ...product, quantity }]);
+        alert('Added to cart!')
+        router.push("/cart");
     }
 
-    const addToWishlist = (productId) => {
-        setWishlist([...wishlist, productId])
-        toast.success('Added to wishlist!', {
-            position: "bottom-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        })
+    const addToWishlist = (product) => {
+        setWishlist([...wishlist, product])
+        alert('Added to wishlist!')
+        router.push("/wishlist");
     }
 
  
@@ -72,7 +68,7 @@ const ProductCard = ({ product }) => {
                 </div>
                 <div className="flex gap-2 w-full">
                     <Button
-                        onClick={() => addToCart(product.id)}
+                        onClick={() => addToCart(product)}
                         className="flex-1"
                         aria-label={`Add ${product.title} to cart`}
                     >
@@ -80,7 +76,7 @@ const ProductCard = ({ product }) => {
                         Add to Cart
                     </Button>
                     <Button
-                        onClick={() => addToWishlist(product.id)}
+                        onClick={() => addToWishlist(product)}
                         variant="outline"
                         className="flex-1"
                         aria-label={`Add ${product.title} to wishlist`}
