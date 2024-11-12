@@ -51,8 +51,8 @@ const HeaderTop = () => {
               name="currency"
               id="currency"
             >
-              <option value="USD $">USD $</option>
               <option value="PAK rs">PAK rs</option>
+              <option value="USD $">USD $</option>
             </select>
           </div>
         </div>

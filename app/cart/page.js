@@ -12,11 +12,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useAppContext } from "../../context/AppContext";
-
-
+import Link from "next/link";
 
 export default function CartPage() {
-    const { cart, setCart} = useAppContext();
+  const { cart, setCart } = useAppContext();
 
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity >= 0) {
@@ -43,7 +42,9 @@ export default function CartPage() {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
         <h1 className="text-2xl font-bold mb-4">Your cart is empty</h1>
-        <Button>Continue Shopping</Button>
+        <Link href="/productList" passHref>
+          <Button>Continue Shopping</Button>
+        </Link>
       </div>
     );
   }

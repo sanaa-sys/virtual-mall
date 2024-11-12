@@ -101,7 +101,7 @@ const HeaderMain = () => {
 
   return (
     <div className="border-b border-gray-200 py-6 bg-gradient-to-r from-blue-200 to-purple-300">
-      <div className="container sm:flex justify-between items-center">
+      <div className="container sm:flex justify-evenly items-center">
         <div className="font-bold text-4xl text-center pr-3 pb-2 sm:pb-0 text-blackish">
           <img
             src="/logo1.png"
@@ -111,10 +111,10 @@ const HeaderMain = () => {
           />
         </div>
 
-        <div className="w-full sm:w-[300px] md:w-[70%] pl-2 relative">
+        <div className="w-full sm:w-[300px] md:w-[70%] pl-2 pr-4 relative">
           <form onSubmit={handleSearch}>
             <input
-              className="border-gray-200 border p-2 px-4 rounded-lg w-full focus:ring-2 focus:ring-purple-500 transition-all"
+              className="border-gray-200 border p-2 px-4 pr-4 rounded-lg w-full focus:ring-2 focus:ring-purple-500 transition-all"
               type="text"
               placeholder="Enter any product name..."
               value={searchTerm}
@@ -123,7 +123,7 @@ const HeaderMain = () => {
             />
             <button type="submit">
               <BsSearch
-                className="absolute right-0 top-0 mr-3 mt-3 text-gray-400"
+                className="absolute right-0 top-0 mr-8 mt-3 text-gray-400"
                 size={20}
               />
             </button>
@@ -145,31 +145,6 @@ const HeaderMain = () => {
               ))}
             </div>
           )}
-        </div>
-
-        <div className="hidden lg:flex gap-4 text-gray-500 text-[30px] pl-1">
-          <BiUser
-            onClick={() => handleRedirect("/signup")}
-            className="cursor-pointer"
-          />
-          <div
-            className="relative cursor-pointer"
-            onClick={() => handleRedirect("/wishlist")}
-          >
-            <FiHeart />
-            <div className="bg-red-600 rounded-full absolute top-0 right-0 w-[18px] h-[18px] text-[12px] text-white grid place-items-center translate-x-1 -translate-y-1">
-              0
-            </div>
-          </div>
-          <div
-            className="relative cursor-pointer"
-            onClick={() => handleRedirect("/cart")}
-          >
-            <MdOutlineShoppingBag />
-            <div className="bg-red-600 rounded-full absolute top-0 right-0 w-[18px] h-[18px] text-[12px] text-white grid place-items-center translate-x-1 -translate-y-1">
-              0
-            </div>
-          </div>
         </div>
       </div>
 
