@@ -82,7 +82,7 @@ const ProductCard = ({ product }) => {
           <Button
             onClick={() => addToCart(product)}
             className="flex-1"
-            aria-label={`Add ${product.title.replace(/"/g, "&quot;")} to cart`} // Escape the quotes
+            aria-label={"Add " + (product.title || "Product") + " to cart"} // Concatenation method
           >
             <ShoppingCart className="w-4 h-4 mr-2" />
             Add to Cart
@@ -91,10 +91,7 @@ const ProductCard = ({ product }) => {
             onClick={() => addToWishlist(product)}
             variant="outline"
             className="flex-1"
-            aria-label={`Add ${product.title.replace(
-              /"/g,
-              "&quot;"
-            )} to wishlist`} // Escape the quotes
+            aria-label={"Add " + (product.title || "Product") + " to wishlist"} // Concatenation method
           >
             <Heart className="w-4 h-4 mr-2" />
             Wishlist
