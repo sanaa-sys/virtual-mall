@@ -18,7 +18,7 @@ const HeaderMain = () => {
 
   // Function to handle input changes for autocomplete
   const handleAutocomplete = async (e) => {
-    const value = e.target.value;
+    const value = e.target.value.toLowerCase(); // Convert input to lowercase
     setSearchTerm(value); // Update the search term
 
     // If the input has 3 or more characters, fetch suggestions from Firestore
@@ -29,7 +29,7 @@ const HeaderMain = () => {
         // Query to search products based on name starting with the input
         const q = query(
           productsRef,
-          where("name", ">=", value), // Starts with input value
+          where("name", ">=", value), // Starts with input value (in lowercase)
           where("name", "<=", value + "\uf8ff"), // Prefix matching
           limit(10) // Limit the number of suggestions to 10
         );

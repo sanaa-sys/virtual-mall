@@ -98,3 +98,6 @@
 .scrollable-contents {
   overflow-y: hidden;
 }
+.nav-bar {
+  position: fixed;
+}
