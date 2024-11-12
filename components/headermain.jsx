@@ -157,7 +157,7 @@ const HeaderMain = () => {
             ))}
           </div>
         ) : (
-          searchTerm && <p>No products found for "{searchTerm}".</p>
+          searchTerm && <p>No products found for &quot;{searchTerm}&quot;.</p>
         )}
       </div>
     </div>
