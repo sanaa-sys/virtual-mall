@@ -1,8 +1,6 @@
-// pages/index.js
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,9 +8,9 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "./lib/firebase"; //Assuming the file is in the root `lib` directory
+import { auth, provider } from "app/lib/firebase"; // Adjust path to your firebase config
+import { signInWithPopup } from "firebase/auth"; // For Google Sign-In
 import "./globals.css";
-
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -22,23 +20,37 @@ export default function Home() {
     useCreateUserWithEmailAndPassword(auth);
 
   const router = useRouter();
+
+  // Function to handle Email/Password signup
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(email, password);
       alert("User created successfully!");
-      router.push("/login"); // Ensure this line is called
+      router.push("/login");
     } catch (error) {
       alert(error.message);
     }
   };
 
-    return (
-     
+  // Function to handle Google Sign-In
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      // You can redirect the user or perform any action after successful login
+      alert(`Welcome ${result.user.displayName}`);
+      router.push("/home"); // Assuming you have a home or home page
+    } catch (error) {
+      console.error("Error signing in with Google:", error);
+      alert("Google sign-in failed!");
+    }
+  };
+
+  return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen bg-gradient-to-r from-blue-200 to-purple-300">
-      <div className=" flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-screen">
         <img src="/logo1.png" alt="Logo" className="center rounded-full " />
-      </div>{" "}
+      </div>
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
@@ -57,7 +69,7 @@ export default function Home() {
                 placeholder="m@example.com"
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full p-2 border rounded" // You can style it as needed
+                className="w-full p-2 border rounded"
               />
             </div>
             <div className="grid gap-2">
@@ -69,13 +81,21 @@ export default function Home() {
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full p-2 border rounded" // Adjust styling as needed
+                className="w-full p-2 border rounded"
               />
             </div>
             <Button type="submit" className="w-full" onClick={handleSignup}>
               Sign Up
             </Button>
           </div>
+
+          {/* Google Sign-In Button */}
+          <div className="flex items-center justify-center mt-1">
+            <Button onClick={handleGoogleSignIn} className="w-full ">
+              Sign in with Google
+            </Button>
+          </div>
+
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}
             <Link href="/login" className="underline">
@@ -84,7 +104,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-            </div>
-      
+    </div>
   );
 }
