@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
@@ -14,7 +13,6 @@ import "./globals.css";
 
 export default function Home() {
   const [email, setEmail] = useState("");
-  const { toast } = useToast();
   const [password, setPassword] = useState("");
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
@@ -24,12 +22,19 @@ export default function Home() {
   // Function to handle Email/Password signup
   const handleSignup = async (e) => {
     e.preventDefault();
+
+    // Validate email and password fields
+    if (!email || !password) {
+      alert("Please fill in both email and password fields.");
+      return; // Prevent form submission if fields are empty
+    }
+
     try {
       await createUserWithEmailAndPassword(email, password);
       alert("User created successfully!");
       router.push("/login");
     } catch (error) {
-      alert(error.message);
+      alert(`Error: ${error.message}`);
     }
   };
 
@@ -37,7 +42,6 @@ export default function Home() {
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
-      // You can redirect the user or perform any action after successful login
       alert(`Welcome ${result.user.displayName}`);
       router.push("/home"); // Assuming you have a home or home page
     } catch (error) {

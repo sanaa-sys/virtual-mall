@@ -6,27 +6,31 @@ import { auth } from "../lib/firebase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import React from "react";
-//import "../globals.css";
-//import SparklesPreview from "@/components/sparklescont";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
-  const { toast } = useToast();
-  const router = useRouter(); // Using Next.js router
+  const router = useRouter();
 
+  // Function to handle login
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    // Validate email and password fields
+    if (!email || !password) {
+      alert("Please fill in both email and password fields.");
+      return; // Prevent login if fields are empty
+    }
+
     try {
       await signInWithEmailAndPassword(email, password);
       alert("Logged in successfully!");
-      router.push("/home"); // Navigate using Next.js router
+      router.push("/home"); // Navigate to the home page
     } catch (error) {
-      alert(error.message);
+      alert(`Error: ${error.message}`);
     }
   };
 
@@ -50,7 +54,7 @@ export default function Login() {
                 placeholder="m@example.com"
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full p-2 border rounded" // You can style it as needed
+                className="w-full p-2 border rounded"
               />
             </div>
 
@@ -63,7 +67,7 @@ export default function Login() {
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full p-2 border rounded" // Adjust styling as needed
+                className="w-full p-2 border rounded"
               />
             </div>
 

@@ -14,7 +14,6 @@ export default function Chatbot() {
     },
   ]);
   const [input, setInput] = useState("");
-  const [answer, setAnswer] = useState("loading");
 
   const formatMessageContent = (text) => {
     return text.replace(/([.!?])\s*(?=[A-Z])/g, "$1\n\n"); // Add line breaks after sentences
@@ -23,10 +22,10 @@ export default function Chatbot() {
   async function generateAnswer(question) {
     try {
       const response = await axios({
-        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyATGXWqRERgnmJp_EZsB22MAnv0SgspzMg", // Use your API Key here
+        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyATGXWqRERgnmJp_EZsB22MAnv0SgspzMg",
         method: "post",
         data: {
-          contents: [{ parts: [{ text: question }] }], // Send question to API
+          contents: [{ parts: [{ text: question }] }],
         },
       });
       return response.data.candidates[0].content.parts[0].text;
@@ -42,7 +41,6 @@ export default function Chatbot() {
       const formattedMessage = formatMessageContent(input);
       setMessages([...messages, { text: formattedMessage, sender: "user" }]);
 
-      // Call generateAnswer to get a response from the API
       const botResponse = await generateAnswer(formattedMessage);
 
       setMessages((prev) => [...prev, { text: botResponse, sender: "bot" }]);
@@ -54,16 +52,16 @@ export default function Chatbot() {
   return (
     <div className="fixed bottom-4 right-4 z-50">
       {isOpen ? (
-        <div className="bg-black text-white rounded-lg shadow-xl w-80 h-96 flex flex-col">
-          <div className="p-4 bg-primary text-primary-foreground flex justify-between items-center">
+        <div className="bg-gradient-to-r from-blue-200 to-purple-300 rounded-lg shadow-xl w-80 h-96 flex flex-col">
+          <div className="p-4 bg-indigo-100 text-black flex justify-between items-center">
             <h3 className="font-semibold">Customer Support</h3>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(false)}
             >
-              <X className="h-5 w-5 text-white" />{" "}
-              {/* Increase icon size and set color */}
+              <X className="h-5 w-5 text-black" />{" "}
+              {/* Black icon on white background */}
             </Button>
           </div>
           <ScrollArea className="flex-grow p-4">
@@ -93,15 +91,15 @@ export default function Chatbot() {
                 placeholder="Type your message..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="bg-gray-800 text-white"
+                className="bg-indigo-100 text-black"
               />
               <Button
                 type="submit"
                 size="icon"
-                className="bg-gray-800 text-white"
+                className="bg-indigo-100 text-black"
               >
                 <Send className="h-5 w-5" />{" "}
-                {/* Increase icon size and set color */}
+                {/* White icon on dark background */}
               </Button>
             </div>
           </form>
@@ -110,10 +108,9 @@ export default function Chatbot() {
         <Button
           onClick={() => setIsOpen(true)}
           size="icon"
-          className="rounded-full h-16 w-16 bg-black text-white flex items-center justify-center" // Larger button with black bg
+          className="rounded-full h-16 w-16 bg-black text-white flex items-center justify-center" // Black button with white icon when closed
         >
-          <MessageCircle className="h-8 w-8 text-white" />{" "}
-          {/* Increase icon size and set color */}
+          <MessageCircle className="h-8 w-8 text-white" /> {/* White icon */}
         </Button>
       )}
     </div>

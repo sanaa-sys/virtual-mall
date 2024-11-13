@@ -35,7 +35,7 @@ export default function Navbar() {
                 Products
               </Link>
               <Link
-                href="/about"
+                href="/aboutus"
                 className="text-muted-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
               >
                 About
