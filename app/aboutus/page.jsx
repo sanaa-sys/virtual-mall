@@ -11,6 +11,8 @@ import {
   ChevronUp,
 } from "lucide-react";
 import Link from "next/link";
+import NavBar from "@/components/ui/navbar";
+import Footer from "@/components/Footer";
 
 const AboutUs = () => {
   const [expandedFaq, setExpandedFaq] = useState(null);
@@ -63,9 +65,12 @@ const AboutUs = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-100 to-purple-100">
-      <header className="bg-white shadow-md">
+      <NavBar />
+      <header className="bg-gradient-to-r from-blue-200 to-purple-300 shadow-md">
         <div className="container mx-auto px-6 py-4">
-          <h1 className="text-3xl font-bold text-gray-800">About ShopEase</h1>
+          <h1 className="text-3xl font-bold text-gray-800">
+            About Virtual Mall
+          </h1>
         </div>
       </header>
 
@@ -195,13 +200,7 @@ const AboutUs = () => {
         </section>
       </main>
 
-      <footer className="bg-gray-800 text-white py-8">
-        <div className="container mx-auto px-6">
-          <p className="text-center">
-            &copy; 2023 ShopEase. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

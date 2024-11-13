@@ -25,7 +25,7 @@ const UserChoiceDialog = ({ open, onClose }) => {
     if (choice === "buyer") {
       router.push("/home");
     } else {
-      router.push("/seller");
+      router.push("/sellerPage");
     }
   };
 
