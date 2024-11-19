@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -13,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Star, ShoppingCart, Heart } from "lucide-react";
 import { useAppContext } from "../../context/AppContext";
 import { useRouter } from "next/navigation";
+
 const ProductCard = ({ product }) => {
   const router = useRouter();
   const { cart, setCart, wishlist, setWishlist } = useAppContext();
@@ -25,7 +25,6 @@ const ProductCard = ({ product }) => {
       quantity = existingProduct.quantity + 1;
     }
 
-    // Use the 'quantity' variable to add or update the product in the cart
     setCart([...cart, { ...product, quantity }]);
     alert("Added to cart!");
     router.push("/cart");
@@ -37,6 +36,10 @@ const ProductCard = ({ product }) => {
     router.push("/wishlist");
   };
 
+  const viewProductDetails = () => {
+    router.push(`/description/${product.id}`); // Correct routing
+  };
+
   if (!product) {
     return (
       <div className="p-4 text-center">Product information not available</div>
@@ -46,14 +49,20 @@ const ProductCard = ({ product }) => {
   return (
     <Card key={product.id} className="flex flex-col">
       <CardHeader>
-        <div className="aspect-square relative mb-2">
+        <div
+          className="aspect-square relative mb-2 cursor-pointer"
+          onClick={viewProductDetails} // Navigate to product details on click
+        >
           <img
-            src={product.image || "https://via.placeholder.com/384x224"} // Optional chaining or fallback
+            src={product.image || "https://via.placeholder.com/384x224"}
             alt={product.title || "Product Image"}
             className="object-contain w-full h-full"
           />
         </div>
-        <CardTitle className="line-clamp-2">
+        <CardTitle
+          className="line-clamp-2 cursor-pointer"
+          onClick={viewProductDetails} // Navigate to product details on click
+        >
           {product.title || "Unnamed Product"}
         </CardTitle>
       </CardHeader>
@@ -64,10 +73,10 @@ const ProductCard = ({ product }) => {
         <div className="mt-2 flex items-center">
           <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 mr-1" />
           <span className="text-sm font-medium">
-            {product.rating.rate || 0}
+            {product.rating?.rate || 0}
           </span>
           <span className="text-sm text-muted-foreground ml-1">
-            ({product.rating.count || 0})
+            ({product.rating?.count || 0})
           </span>
         </div>
       </CardContent>
@@ -75,11 +84,10 @@ const ProductCard = ({ product }) => {
         <div className="flex justify-between items-center w-full">
           <Badge variant="secondary">{product.category || "No category"}</Badge>
           <span className="text-lg font-bold">
-            ${product.price.toFixed(2) || 0}
+            ${product.price?.toFixed(2) || 0}
           </span>
         </div>
         <div className="flex gap-2 w-full">
-          {/* eslint-disable react/no-unescaped-entities */}
           <Button
             onClick={() => addToCart(product)}
             className="flex-1"
@@ -97,7 +105,6 @@ const ProductCard = ({ product }) => {
             <Heart className="w-4 h-4 mr-2" />
             Wishlist
           </Button>
-          {/* eslint-enable react/no-unescaped-entities */}
         </div>
       </CardFooter>
     </Card>
