@@ -14,7 +14,7 @@ import "./globals.css";
 export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [createUserWithEmailAndPassword] =
+  const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
 
   const router = useRouter();
@@ -34,7 +34,13 @@ export default function Home() {
       alert("User created successfully!");
       router.push("/login");
     } catch (error) {
-      alert(`Error: ${error.message}`);
+      if (error.code === "auth/weak-password") {
+        alert("Password is too weak. Please use a stronger password.");
+      } else if (error.code === "auth/email-already-in-use") {
+        alert("Email address is already in use.");
+      } else {
+        alert(`Error: ${error.message}`);
+      }
     }
   };
 
@@ -88,8 +94,13 @@ export default function Home() {
                 className="w-full p-2 border rounded"
               />
             </div>
-            <Button type="submit" className="w-full" onClick={handleSignup}>
-              Sign Up
+            <Button
+              type="submit"
+              className="w-full"
+              onClick={handleSignup}
+              disabled={loading}
+            >
+              {loading ? "Signing Up..." : "Sign Up"}
             </Button>
           </div>
 
