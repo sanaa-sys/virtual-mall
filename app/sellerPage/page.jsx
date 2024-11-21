@@ -8,8 +8,12 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import Footer from "@/components/Footer";
+import ThankYouPopup from "@/components/ThankYouPopup";
+import { useRouter } from 'next/navigation';
 
 const SellerPage = () => {
+    const router = useRouter();
+    const [showThankYou, setShowThankYou] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -34,13 +38,18 @@ const SellerPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log("Form submitted:", formData);
-    // Reset form or show success message
-  };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Here you would typically send the form data to your backend
+        console.log("Form submitted:", formData);
+        // Show the thank you popup immediately after form submission
+        setShowThankYou(true);
+    };
+    const handleClosePopup = () => {
+        setShowThankYou(false);
+        router.push('/home'); // Redirect to homepage
+    };
   const benefits = [
     {
       icon: <DollarSign className="w-12 h-12 text-green-500" />,
@@ -269,7 +278,10 @@ const SellerPage = () => {
               </Button>
             </div>
           </motion.form>
-        </section>
+              </section>
+         
+                  {showThankYou && <ThankYouPopup onClose={handleClosePopup} />}
+             
       </main>
 
       <Footer />

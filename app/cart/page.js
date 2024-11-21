@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import NavBar from "@/components/ui/navbar";
 import {
   Table,
   TableBody,
@@ -16,7 +17,7 @@ import Link from "next/link";
 
 export default function CartPage() {
   const { cart, setCart } = useAppContext();
-
+    console.log(cart);
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity >= 0) {
       setCart((items) =>
@@ -50,7 +51,8 @@ export default function CartPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8">
+          <NavBar />
       <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="lg:w-2/3">
