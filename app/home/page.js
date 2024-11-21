@@ -10,6 +10,8 @@ import NavBar from "@/components/ui/navbar";
 import UserChoiceDialog from "@/components/ui/UserChoiceDialog";
 import { useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const [openDialog, setOpenDialog] = useState(false);
@@ -40,9 +42,7 @@ export default function Home() {
   return (
     <div className="bg-gradient-to-r from-blue-200 to-purple-300">
       <HeaderTop />
-
       <HeaderMain />
-
       <NavBar />
       <Carousel />
       <br />
@@ -63,6 +63,9 @@ export default function Home() {
         open={openDialog}
         onClose={() => setOpenDialog(false)}
       />
+
+      {/* ToastContainer for toast notifications */}
+      <ToastContainer />
     </div>
   );
 }
