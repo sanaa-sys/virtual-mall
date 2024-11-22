@@ -64,7 +64,7 @@ export default function Home() {
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
-            <h1 className="text-3xl font-bold">Welcome to Virtual Mall</h1>
+            <h1 className="text-xl font-bold">Welcome to Virtual Mall</h1>
             <h1 className="text-3xl font-bold">Sign Up</h1>
             <p className="text-balance text-muted-foreground">
               Enter your email below to create an account
