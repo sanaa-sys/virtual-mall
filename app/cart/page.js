@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -132,8 +133,10 @@ export default function CartPage() {
             <div className="flex justify-between font-semibold text-lg mt-4 pt-4 border-t">
               <span>Total</span>
               <span>${total.toFixed(2)}</span>
-            </div>
-            <Button className="w-full mt-6">Proceed to Checkout</Button>
+                      </div>
+                      <Link href="/payment" passHref className="w-full">
+                          <Button className="w-full mt-6">Proceed to Checkout</Button>
+                      </Link>
           </div>
         </div>
       </div>
