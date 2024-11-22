@@ -48,11 +48,12 @@ export default function Home() {
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
+      console.log(result); // Log the full result
       alert(`Welcome ${result.user.displayName}`);
-      router.push("/home"); // Assuming you have a home or home page
+      router.push("/home");
     } catch (error) {
       console.error("Error signing in with Google:", error);
-      alert("Google sign-in failed!");
+      alert("Google sign-in failed: " + error.message); // Log detailed error
     }
   };
 
