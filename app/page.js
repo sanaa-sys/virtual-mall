@@ -11,6 +11,8 @@ import { auth, provider } from "app/lib/firebase"; // Adjust path to your fireba
 import { signInWithPopup } from "firebase/auth"; // For Google Sign-In
 import "./globals.css";
 
+import GoogleAuth from '@/components/GoogleAuth'
+
 export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,18 +46,7 @@ export default function Home() {
     }
   };
 
-  // Function to handle Google Sign-In
-  // const handleGoogleSignIn = async () => {
-  //   try {
-  //     const result = await signInWithPopup(auth, provider);
-  //     console.log(result); // Log the full result
-  //     alert(`Welcome ${result.user.displayName}`);
-  //     router.push("/home");
-  //   } catch (error) {
-  //     console.error("Error signing in with Google:", error);
-  //     alert("Google sign-in failed: " + error.message); // Log detailed error
-  //   }
-  // };
+
 
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen bg-gradient-to-r from-blue-200 to-purple-300">
@@ -94,7 +85,8 @@ export default function Home() {
                 required
                 className="w-full p-2 border rounded"
               />
-            </div>
+                      </div>
+             
             <Button
               type="submit"
               className="w-full"
@@ -104,13 +96,8 @@ export default function Home() {
               {loading ? "Signing Up..." : "Sign Up"}
             </Button>
           </div>
-
-          {/* Google Sign-In Button */}
-          {/* <div className="flex items-center justify-center mt-1">
-            <Button onClick={handleGoogleSignIn} className="w-full ">
-              Sign in with Google
-            </Button>
-          </div> */}
+                  <GoogleAuth mode="Sign Up" />
+ 
 
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}

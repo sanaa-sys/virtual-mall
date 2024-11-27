@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import GoogleAuth from '@/components/GoogleAuth'
 import React from "react";
 
 export default function Login() {
@@ -76,7 +77,8 @@ export default function Login() {
               >
                 {loading ? "Logging in..." : "Login"}
               </Button>
-            </div>
+                      </div>
+                      <GoogleAuth mode="Log In" />
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}
               <Link href="/" className="underline">
