@@ -58,14 +58,7 @@ export default function Home() {
       <br />
       <Footer />
 
-      {/* User choice dialog */}
-      <UserChoiceDialog
-        open={openDialog}
-        onClose={() => setOpenDialog(false)}
-      />
-
-      {/* ToastContainer for toast notifications */}
-      <ToastContainer />
+     
     </div>
   );
 }

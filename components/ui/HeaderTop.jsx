@@ -1,15 +1,16 @@
 import React from "react";
-import { FaFacebook } from "react-icons/fa";
+import { FaFacebook, FaTwitter, FaLinkedin } from "react-icons/fa";
 import { FaSquareInstagram } from "react-icons/fa6";
-import { FaTwitter } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
+import Link from 'next/link';
 
 const HeaderTop = () => {
   return (
-    <div className=" headertop border-b border-gray-200 hidden sm:block pl-10  ">
+    <div className="headertop border-b border-gray-200 hidden sm:block ">
       <div className="container py-4">
-        <div className="flex justify-between items-center">
-          <div className="hidden lg:flex gap-1">
+        <div className="flex justify-evenly items-center">
+          {/* Social Media Icons */}
+          <div className="hidden lg:flex gap-1 pr-10">
             <div className="header_top__icon_wrapper">
               <a
                 href="https://www.facebook.com/techgrovecom?mibextid=ZbWKwL"
@@ -41,19 +42,20 @@ const HeaderTop = () => {
             </div>
           </div>
 
-          <div className="text-black pr-10 text-5xl font-extrabold overflow-hidden">
-            Virtual Mall Lahore
-          </div>
-
-          <div className="flex-gap-4 pr-10 ">
-            <select
-              className="text-black text-[12px] w-[70px] "
-              name="currency"
-              id="currency"
-            >
-              <option value="USD $">USD $</option>
-              <option value="PAK rs">PAK rs</option>
-            </select>
+          {/* Virtual Mall Lahore Text and Seller Button */}
+          <div className="flex justify-center items-center text-center gap-10 ">
+            <div className="text-black text-5xl font-extrabold overflow-hidden pr-10">
+              Virtual Mall Lahore
+            </div>
+            <Link href="/sellerPage" passHref>
+              <Button
+                variant="outline"
+                size="lg"
+                className="flex-gap-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105"
+              >
+                Be a Seller on Virtual Mall
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
