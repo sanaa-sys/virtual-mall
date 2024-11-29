@@ -1,5 +1,5 @@
 "use client";
-
+import emailjs from "emailjs-com";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { DollarSign, Package, BarChart, ShieldCheck } from "lucide-react";
@@ -9,18 +9,19 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import Footer from "@/components/Footer";
 import ThankYouPopup from "@/components/ThankYouPopup";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 const SellerPage = () => {
-    const router = useRouter();
-    const [showThankYou, setShowThankYou] = useState(false);
+  const router = useRouter();
+  const [showThankYou, setShowThankYou] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     phoneNumber: "",
     businessName: "",
     productCategory: "",
-    agreeTerms: false,
+    agreeTerms: false, // State for checkbox
+    socialLink: "", // Initial state for socialLink
   });
 
   const handleInputChange = (e) => {
@@ -38,18 +39,39 @@ const SellerPage = () => {
     }));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Here you would typically send the form data to your backend
-        console.log("Form submitted:", formData);
-        // Show the thank you popup immediately after form submission
+    const templateParams = {
+      fullName: formData.fullName,
+      email: formData.email,
+      phoneNumber: formData.phoneNumber,
+      businessName: formData.businessName,
+      productCategory: formData.productCategory,
+      socialLink: formData.socialLink,
+    };
+
+    emailjs
+      .send(
+        "service_cio6onz",
+        "template_579m15j",
+        templateParams,
+        "1oDlFZNgaaQnAhytI"
+      )
+      .then((response) => {
+        console.log("Email sent successfully:", response);
         setShowThankYou(true);
-    };
-    const handleClosePopup = () => {
-        setShowThankYou(false);
-        router.push('/home'); // Redirect to homepage
-    };
+      })
+      .catch((error) => {
+        console.error("Error sending email:", error);
+      });
+  };
+
+  const handleClosePopup = () => {
+    setShowThankYou(false);
+    router.push("/home");
+  };
+
   const benefits = [
     {
       icon: <DollarSign className="w-12 h-12 text-green-500" />,
@@ -216,7 +238,6 @@ const SellerPage = () => {
                 name="socialLink"
                 value={formData.socialLink}
                 onChange={handleInputChange}
-                required
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
@@ -242,7 +263,7 @@ const SellerPage = () => {
                 htmlFor="productCategory"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Primary Product Category
+                Product Category
               </Label>
               <Input
                 type="text"
@@ -254,35 +275,38 @@ const SellerPage = () => {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
-            <div className="mb-4">
-              <div className="flex items-center">
-                <Checkbox
-                  id="agreeTerms"
-                  name="agreeTerms"
-                  checked={formData.agreeTerms}
-                  onCheckedChange={handleCheckboxChange} // Pass the checked value directly
-                  required
-                />
 
-                <Label
-                  htmlFor="agreeTerms"
-                  className="ml-2 text-gray-700 text-sm"
-                >
-                  I agree to the terms and conditions
-                </Label>
-              </div>
+            <div className="mb-4 flex items-center">
+              <Checkbox
+                checked={formData.agreeTerms} // Use checked for state management
+                onCheckedChange={handleCheckboxChange} // Use onCheckedChange to handle checkbox change
+                id="agreeTerms"
+              />
+              <Label
+                htmlFor="agreeTerms"
+                className="ml-2 text-sm text-gray-600"
+              >
+                I agree to the terms and conditions
+              </Label>
             </div>
-            <div className="flex items-center justify-between">
-              <Button type="submit" disabled={!formData.agreeTerms}>
-                Submit Application
-              </Button>
-            </div>
+
+            <Button
+              type="submit"
+              disabled={!formData.agreeTerms}
+              className="w-full bg-blue-500 text-white py-2 px-4 rounded"
+            >
+              Submit
+            </Button>
           </motion.form>
-              </section>
-         
-                  {showThankYou && <ThankYouPopup onClose={handleClosePopup} />}
-             
+        </section>
       </main>
+
+      {showThankYou && (
+        <ThankYouPopup
+          message="Thank you for applying to become a seller on Virtual Mall Lahore!"
+          onClose={handleClosePopup}
+        />
+      )}
 
       <Footer />
     </div>
