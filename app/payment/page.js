@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import emailjs from 'emailjs-com';
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,25 +19,64 @@ import { Separator } from "@/components/ui/separator";
 import { CardPaymentForm } from "./card-payment-form";
 import { AffirmationModal } from "@/components/ui/confirmation-modal";
 import { useAppContext } from "../../context/AppContext";
+
 export default function PaymentPage() {
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [isProcessing, setIsProcessing] = useState(false);
   const [showAffirmation, setShowAffirmation] = useState(false);
   const router = useRouter();
-    const { userEmail, setUser } = useAppContext();
+  const { userEmail } = useAppContext();
+
+  const sendOrderConfirmationEmail = (emailParams) => {
+    emailjs.send(
+      'service_cio6onz',  // Replace with your EmailJS service ID
+      'template_t5k24tp', // Replace with your EmailJS template ID
+      emailParams,        // Parameters to fill in the template
+      '1oDlFZNgaaQnAhytI'      // Replace with your EmailJS user ID
+    ).then((result) => {
+      console.log('Email sent successfully:', result);
+    }).catch((error) => {
+      console.error('Error sending email:', error);
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsProcessing(true);
 
     if (paymentMethod === "card") {
       alert("Payment confirmed");
+
       // Simulate payment processing
       await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      // Prepare email data
+      const emailParams = {
+        customer_email: userEmail, // Email of the user
+        order_id: "12345", // You can replace this with dynamic order ID
+        total_amount: "$104.99", // Example total amount
+        payment_method: "Credit/Debit Card",
+      };
+
+      // Send confirmation email
+      sendOrderConfirmationEmail(emailParams);
+
       // Redirect to confirmation page
       router.push("/home");
     } else {
-      // Show affirmation modal for Cash on Delivery
+      // Cash on Delivery, show affirmation modal
       setShowAffirmation(true);
+
+      // Prepare email data for COD
+      const emailParams = {
+        customer_email: userEmail,
+        order_id: "12345",
+        total_amount: "$104.99",
+        payment_method: "Cash on Delivery",
+      };
+
+      // Send confirmation email for COD
+      sendOrderConfirmationEmail(emailParams);
     }
 
     setIsProcessing(false);
@@ -44,7 +84,6 @@ export default function PaymentPage() {
 
   const handleCloseAffirmation = () => {
     setShowAffirmation(false);
-    // Redirect to home page after closing the modal
     router.push("/home");
   };
 
