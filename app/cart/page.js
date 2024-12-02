@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/table";
 import { useAppContext } from "../../context/AppContext";
 import Link from "next/link";
+import emailjs from "emailjs-com";
 
 export default function CartPage() {
   const { cart, setCart } = useAppContext();

@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useAppContext } from "../../context/AppContext";
 const HeaderTop = () => {
     const { userEmail, setUser } = useAppContext();
-    const isVirtualMallSeller = userEmail?.endsWith('@virtualmall.com') ?? false;
+    const isVirtualMallSeller = userEmail?.endsWith('@virtualmall.com') ?? false; //see this
     const router = useRouter()
     const redirect = () => {
         if (userEmail) {
