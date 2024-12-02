@@ -10,16 +10,20 @@ import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth, provider } from "app/lib/firebase"; // Adjust path to your firebase config
 import { signInWithPopup } from "firebase/auth"; // For Google Sign-In
 import "./globals.css";
+import { useAppContext } from "/context/AppContext";
+
 
 import GoogleAuth from '@/components/GoogleAuth'
 
 export default function Home() {
-  const [email, setEmail] = useState("");
+
   const [password, setPassword] = useState("");
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
 
-  const router = useRouter();
+    const router = useRouter();
+    const { userEmail, setUser } = useAppContext();
+    
 
   // Function to handle Email/Password signup
   const handleSignup = async (e) => {
@@ -69,7 +73,7 @@ export default function Home() {
                 id="email"
                 type="email"
                 placeholder="m@example.com"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setUser(e.target.value)}
                 required
                 className="w-full p-2 border rounded"
               />

@@ -7,6 +7,7 @@ import { signInWithPopup } from 'firebase/auth'
 import { doc, setDoc, getDoc } from 'firebase/firestore'
 import { Button } from '@/components/ui/button'
 
+
 export default function GoogleAuth({ mode }) {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)

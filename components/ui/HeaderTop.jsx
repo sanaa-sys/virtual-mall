@@ -2,9 +2,24 @@ import React from "react";
 import { FaFacebook, FaTwitter, FaLinkedin } from "react-icons/fa";
 import { FaSquareInstagram } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
-import Link from 'next/link';
-
+import { useRouter } from 'next/navigation';
+// This would typically come from an API or state management solution
+import { useAppContext } from "../../context/AppContext";
 const HeaderTop = () => {
+    const { userEmail, setUser } = useAppContext();
+    const isVirtualMallSeller = userEmail?.endsWith('@virtualmall.com') ?? false;
+    const router = useRouter()
+    const redirect = () => {
+        if (userEmail) {
+            if (isVirtualMallSeller) {
+                router.push('/sell');
+            } else {
+                router.push('/sellerPage');
+            }
+        } else {
+            router.push('/login');
+        }
+    };
   return (
     <div className="headertop border-b border-gray-200 hidden sm:block ">
       <div className="container py-4">
@@ -47,15 +62,16 @@ const HeaderTop = () => {
             <div className="text-black text-5xl font-extrabold overflow-hidden pr-10">
               Virtual Mall Lahore
             </div>
-            <Link href="/sellerPage" passHref>
+       
               <Button
-                variant="outline"
+               variant="outline"
+                onClick={redirect}
                 size="lg"
                 className="flex-gap-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105"
               >
                 Be a Seller on Virtual Mall
               </Button>
-            </Link>
+
           </div>
         </div>
       </div>

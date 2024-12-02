@@ -10,8 +10,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Footer from "@/components/Footer";
 import ThankYouPopup from "@/components/ThankYouPopup";
 import { useRouter } from "next/navigation";
+import { useAppContext } from "../../context/AppContext";
 
 const SellerPage = () => {
+
   const router = useRouter();
   const [showThankYou, setShowThankYou] = useState(false);
   const [formData, setFormData] = useState({

@@ -9,13 +9,14 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GoogleAuth from '@/components/GoogleAuth'
 import React from "react";
-
+import { useAppContext } from "../../context/AppContext";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const { userEmail, setUser } = useAppContext();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -53,7 +54,7 @@ export default function Login() {
                   id="email"
                   type="email"
                   placeholder="m@example.com"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setUser(e.target.value)}
                   required
                   className="w-full p-2 border rounded"
                 />
