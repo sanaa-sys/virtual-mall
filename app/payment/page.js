@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { v4 as uuidv4 } from 'uuid';  // Import UUID library
 import emailjs from 'emailjs-com';
 
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,7 @@ export default function PaymentPage() {
   const router = useRouter();
   const { userEmail } = useAppContext();
 
+  // Function to send order confirmation email
   const sendOrderConfirmationEmail = (emailParams) => {
     emailjs.send(
       'service_cio6onz',  // Replace with your EmailJS service ID
@@ -44,16 +46,19 @@ export default function PaymentPage() {
     event.preventDefault();
     setIsProcessing(true);
 
+    // Generate a unique order ID
+    const orderId = uuidv4();  // This will generate a unique ID for each order
+
     if (paymentMethod === "card") {
       alert("Payment confirmed");
 
       // Simulate payment processing
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // Prepare email data
+      // Prepare email data with the dynamic order ID
       const emailParams = {
         customer_email: userEmail, // Email of the user
-        order_id: "12345", // You can replace this with dynamic order ID
+        order_id: orderId, // Unique order ID
         total_amount: "$104.99", // Example total amount
         payment_method: "Credit/Debit Card",
       };
@@ -70,7 +75,7 @@ export default function PaymentPage() {
       // Prepare email data for COD
       const emailParams = {
         customer_email: userEmail,
-        order_id: "12345",
+        order_id: orderId, // Unique order ID
         total_amount: "$104.99",
         payment_method: "Cash on Delivery",
       };
