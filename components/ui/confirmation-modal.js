@@ -15,7 +15,7 @@ export function AffirmationModal({ isOpen, onClose }) {
         <DialogHeader>
           <DialogTitle>Order Placed Successfully</DialogTitle>
           <DialogDescription>
-            Your order has been placed successfully. You will pay for your order when it is delivered to you.
+            Your order has been placed successfully and a confirmation email has been sent to you. You will pay for your order when it is delivered to you.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
