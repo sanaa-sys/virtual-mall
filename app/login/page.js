@@ -11,7 +11,7 @@ import GoogleAuth from '@/components/GoogleAuth'
 import React from "react";
 import { useAppContext } from "../../context/AppContext";
 export default function Login() {
-  const [email, setEmail] = useState("");
+  
   const [password, setPassword] = useState("");
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const router = useRouter();

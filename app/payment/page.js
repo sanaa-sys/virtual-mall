@@ -17,13 +17,13 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { CardPaymentForm } from "./card-payment-form";
 import { AffirmationModal } from "@/components/ui/confirmation-modal";
-
+import { useAppContext } from "../../context/AppContext";
 export default function PaymentPage() {
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [isProcessing, setIsProcessing] = useState(false);
   const [showAffirmation, setShowAffirmation] = useState(false);
   const router = useRouter();
-
+    const { userEmail, setUser } = useAppContext();
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsProcessing(true);
