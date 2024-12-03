@@ -10,6 +10,17 @@ export default function Navbar() {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  const redirect = () => {
+    if (userEmail) {
+      if (isVirtualMallSeller) {
+        router.push("/sell");
+      } else {
+        router.push("/sellerPage");
+      }
+    } else {
+      router.push("/login");
+    }
+  };
 
   return (
     <nav className="bg-white shadow-md">
@@ -46,6 +57,7 @@ export default function Navbar() {
               >
                 Contact Us
               </Link>
+              
             </div>
           </div>
           <div className="hidden md:block">
@@ -110,6 +122,7 @@ export default function Navbar() {
             >
               Contact Us
             </Link>
+           
           </div>
           <div className="pt-4 pb-3 border-t border-border">
             <div className="flex items-center px-5">
