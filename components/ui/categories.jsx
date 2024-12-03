@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from 'next/navigation'
 import { useAppContext } from "../../context/AppContext";
+import { motion } from "framer-motion";
 
 const categories = {
     "category": [
@@ -200,23 +201,49 @@ const categories = {
 
 
 
-
 export default function CategoryGrid() {
-    const { category, setCategory } = useAppContext();
-    const router = useRouter();
-    const handleCategoryClick = (categoryName) =>
-    {
-        const formattedName = categoryName.toLowerCase().replace(/\s+/g, '-');
-        router.push(`/catalog/${formattedName}`);
-        setCategory(formattedName);
-        console.log(category);
-    };
+  const { category, setCategory } = useAppContext();
+  const router = useRouter();
+  const handleCategoryClick = (categoryName) => {
+    const formattedName = categoryName.toLowerCase().replace(/\s+/g, "-");
+    router.push(`/catalog/${formattedName}`);
+    setCategory(formattedName);
+    console.log(category);
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-3xl font-semibold mb-6 text-white">Categories</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4">
-              {categories.category.map((category, index) => (
-                  <div key={index} onClick={() => handleCategoryClick(category.name)} className="group block cursor-pointer" >
+      <h2 className="text-3xl font-semibold mb-6 text-black">Categories</h2>
+      <motion.div
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: {
+            opacity: 0,
+            scale: 0.8,
+          },
+          visible: {
+            opacity: 1,
+            scale: 1,
+            transition: {
+              delay: 0.2,
+              duration: 0.7, // Slower duration
+            },
+          },
+        }}
+      >
+        {categories.category.map((category, index) => (
+          <motion.div
+            key={index}
+            onClick={() => handleCategoryClick(category.name)}
+            className="group block cursor-pointer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.15 }} // Slower stagger
+          >
             <div className="bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg h-full flex flex-col">
               <div className="aspect-square relative overflow-hidden rounded-t-lg">
                 <Image
@@ -233,9 +260,9 @@ export default function CategoryGrid() {
                 </h3>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }

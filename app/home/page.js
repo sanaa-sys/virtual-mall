@@ -12,6 +12,34 @@ import { useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+
+function Section({ children }) {
+  const controls = useAnimation();
+  const { ref, inView } = useInView({ triggerOnce: true });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={controls}
+      variants={{
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0 },
+      }}
+      transition={{ duration: 0.6 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export default function Home() {
   const [openDialog, setOpenDialog] = useState(false);
@@ -48,17 +76,21 @@ export default function Home() {
       <br />
       <br />
       <br />
-      <CategoryGrid />
+      <Section>
+        <CategoryGrid />
+      </Section>
       <br />
       <br />
       <br />
-      <JustForYou />
+      <Section>
+        <JustForYou />
+      </Section>
       <br />
-      <Chatbot />
+      <Section>
+        <Chatbot />
+      </Section>
       <br />
       <Footer />
-
-     
     </div>
   );
 }

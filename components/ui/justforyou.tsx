@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Star } from "lucide-react";
-
+import { motion } from "framer-motion";
 interface Product {
   id: number;
   name: string;
@@ -77,7 +77,14 @@ const products: Product[] = [
 
 function ProductCard({ product }: { product: Product }) {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <motion.div
+      className="bg-white rounded-lg shadow-md overflow-hidden no-scrollbar"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="relative aspect-square">
         <Image
           src={product.image}
@@ -117,14 +124,14 @@ function ProductCard({ product }: { product: Product }) {
           </span>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 export default function JustForYou() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-semibold mb-6 text-white">Just For You</h2>
+      <h2 className="text-2xl font-semibold mb-6 text-black">Just For You</h2>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />

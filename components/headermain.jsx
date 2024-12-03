@@ -9,6 +9,7 @@ import { collection, query, where, getDocs, limit } from "firebase/firestore"; /
 import { db } from "app/lib/firebase"; // Ensure the path is correct for your Firebase setup
 import ProductCard from "@/components/ui/productCard"; // Import the ProductCard component
 import Fuse from "fuse.js";
+import { motion } from 'framer-motion';
 
 const HeaderMain = () => {
   const router = useRouter();
@@ -130,14 +131,7 @@ const HeaderMain = () => {
   return (
     <div className="border-b border-gray-200 py-6 bg-gradient-to-r from-blue-200 to-purple-300">
       <div className="container sm:flex justify-evenly items-center">
-        <div className="font-bold text-4xl text-center pr-3 pb-2 sm:pb-0 text-blackish">
-          <img
-            src="/logo1.png"
-            alt="Logo"
-            className="center rounded-full pl-2"
-            style={{ width: "150px", height: "150px" }}
-          />
-        </div>
+      <div className="font-bold text-4xl text-center pr-3 pb-2 sm:pb-0 text-blackish"> <motion.img src="/logo1.png" alt="Logo" className="center rounded-full pl-2" style={{ width: "150px", height: "150px" }} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 1 }} /> </div>
 
         <div className="w-full sm:w-[300px] md:w-[70%] pl-2 pr-4 relative">
           <form onSubmit={handleSearch}>

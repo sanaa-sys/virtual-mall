@@ -44,16 +44,16 @@ export default function Home() {
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen bg-gradient-to-r from-blue-200 to-purple-300">
       {/* Logo Section with Slide to Top Animation */}
-      <motion.img 
-        src="/logo1.png" 
-        alt="Logo" 
+      <motion.img
+        src="/logo1.png"
+        alt="Logo"
         className="center rounded-full"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ duration: 1 }}
       />
       {/* Sign Up Form with Slide Up Animation */}
-      <motion.div 
+      <motion.div
         className="flex items-center justify-center py-12"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -68,7 +68,7 @@ export default function Home() {
             </p>
           </div>
           <div className="grid gap-4">
-            <div className="grid gap-2">
+            <div className="grid gap-2 no-scrollbar">
               <label htmlFor="email">Email</label>
               <motion.input
                 id="email"
@@ -80,8 +80,8 @@ export default function Home() {
                 whileFocus={{ scale: 1.05 }}
               />
             </div>
-            <div className="grid gap-2">
-              <div className="flex items-center">
+            <div className="grid gap-2 no-scrollbar">
+              <div className="flex items-center no-scrollbar">
                 <label htmlFor="password">Password</label>
               </div>
               <motion.input
