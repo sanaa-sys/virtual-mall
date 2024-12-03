@@ -2,39 +2,30 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth, provider } from "app/lib/firebase"; // Adjust path to your firebase config
-import { signInWithPopup } from "firebase/auth"; // For Google Sign-In
+import { auth } from "app/lib/firebase"; // Adjust path to your firebase config
 import "./globals.css";
 import { useAppContext } from "/context/AppContext";
-
-
-import GoogleAuth from '@/components/GoogleAuth'
+import GoogleAuth from "@/components/GoogleAuth";
+import { motion } from "framer-motion"; // Import framer-motion
 
 export default function Home() {
-
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
-
-    const router = useRouter();
-    const { userEmail, setUser } = useAppContext();
-    
+  const router = useRouter();
+  const { userEmail, setUser } = useAppContext();
 
   // Function to handle Email/Password signup
   const handleSignup = async (e) => {
     e.preventDefault();
-
-    // Validate email and password fields
     if (!email || !password) {
       alert("Please fill in both email and password fields.");
-      return; // Prevent form submission if fields are empty
+      return;
     }
-
     try {
       await createUserWithEmailAndPassword(email, password);
       alert("User created successfully!");
@@ -50,14 +41,24 @@ export default function Home() {
     }
   };
 
-
-
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen bg-gradient-to-r from-blue-200 to-purple-300">
-      <div className="flex items-center justify-center h-screen">
-        <img src="/logo1.png" alt="Logo" className="center rounded-full " />
-      </div>
-      <div className="flex items-center justify-center py-12">
+      {/* Logo Section with Slide to Top Animation */}
+      <motion.img 
+        src="/logo1.png" 
+        alt="Logo" 
+        className="center rounded-full"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 1 }}
+      />
+      {/* Sign Up Form with Slide Up Animation */}
+      <motion.div 
+        className="flex items-center justify-center py-12"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.5 }}
+      >
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
             <h1 className="text-xl font-bold">Welcome to Virtual Mall</h1>
@@ -69,28 +70,29 @@ export default function Home() {
           <div className="grid gap-4">
             <div className="grid gap-2">
               <label htmlFor="email">Email</label>
-              <input
+              <motion.input
                 id="email"
                 type="email"
                 placeholder="m@example.com"
-                onChange={(e) => setUser(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full p-2 border rounded"
+                whileFocus={{ scale: 1.05 }}
               />
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
                 <label htmlFor="password">Password</label>
               </div>
-              <input
+              <motion.input
                 id="password"
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full p-2 border rounded"
+                whileFocus={{ scale: 1.05 }}
               />
-                      </div>
-             
+            </div>
             <Button
               type="submit"
               className="w-full"
@@ -100,17 +102,25 @@ export default function Home() {
               {loading ? "Signing Up..." : "Sign Up"}
             </Button>
           </div>
-                  <GoogleAuth mode="Sign Up" />
- 
-
+          <GoogleAuth mode="Sign Up" />
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}
             <Link href="/login" className="underline">
               Log in
             </Link>
           </div>
+          {error && (
+            <motion.div
+              className="error-notification"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              {error.message}
+            </motion.div>
+          )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
