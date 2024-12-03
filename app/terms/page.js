@@ -1,44 +1,97 @@
-import { ScrollArea } from "@/components/ui/scroll-area"
+"use client";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
-export default function TermsAndConditions() {
-    return (
-        <div className="container mx-auto p-4">
-            <ScrollArea className="h-[80vh] w-full rounded-md border p-4">
-                <div className="prose max-w-none">
-                    <h1 className="text-3xl font-bold mb-4">Terms and Conditions</h1>
-                    <p className="text-sm text-gray-500 mb-6">Last Updated: December 2, 2024</p>
+const MyComponent = () => {
+  const router = useRouter();
 
-                    <h2 className="text-2xl font-semibold mt-6 mb-3">INTRODUCTION</h2>
-                    <h3 className="text-xl font-semibold mt-4 mb-2">About Us</h3>
-                    <p>This Site is owned and operated by Virtual Pakistan Pvt Limited (Registration Number: 0080097). Virtual Mall Lahore is an e-commerce platform that connects Buyers and Sellers, offering a wide variety of products for sale.</p>
+  const handleRedirect = () => {
+    router.push("/home");
+  };
 
-                    <h2 className="text-2xl font-semibold mt-6 mb-3">1. AGREEMENT TO OUR LEGAL TERMS</h2>
-                    <p>By accessing and using the website, platform, and services of Virtual Mall Lahore ("Company," "we," "us," "our"), including but not limited to the website https://virtual-mall-phi.vercel.app/ (the "Site") and any related services or products (collectively, the "Services"), you agree to comply with and be bound by these Terms and Conditions ("Terms").</p>
-                    <p>If you do not agree with these Terms, please do not use our Services.</p>
+  return (
+    <div className="container mx-auto p-4">
+      <ScrollArea className="h-[80vh] w-full rounded-md border p-4">
+        <div className="prose max-w-none">
+          <h1 className="text-3xl font-bold mb-4">Terms and Conditions</h1>
+          <p className="text-sm text-gray-500 mb-6">
+            Last Updated: December 2, 2024
+          </p>
 
-                    <h2 className="text-2xl font-semibold mt-6 mb-3">2. DEFINITIONS</h2>
-                    <ul>
-                        <li><strong>Buyer</strong> refers to any individual or entity who purchases products through the Virtual Mall Lahore platform.</li>
-                        <li><strong>Seller</strong> refers to any individual or entity who lists and sells products through the Virtual Mall Lahore platform.</li>
-                        <li><strong>Platform</strong> refers to the Virtual Mall Lahore marketplace, including the website, mobile app, and associated services.</li>
-                        <li><strong>Transaction</strong> refers to any purchase or sale conducted on the Platform.</li>
-                    </ul>
+          <h2 className="text-2xl font-semibold mt-6 mb-3">INTRODUCTION</h2>
+          <h3 className="text-xl font-semibold mt-4 mb-2">About Us</h3>
+          <p>
+            This Site is owned and operated by Virtual Pakistan Pvt Limited
+            (Registration Number: 0080097). Virtual Mall Lahore is an e-commerce
+            platform that connects Buyers and Sellers, offering a wide variety
+            of products for sale.
+          </p>
 
-                    {/* Continue with the rest of the sections */}
+          <h2 className="text-2xl font-semibold mt-6 mb-3">
+            1. AGREEMENT TO OUR LEGAL TERMS
+          </h2>
+          <p>
+            By accessing and using the website, platform, and services of
+            Virtual Mall Lahore ("Company," "we," "us," "our"), including but
+            not limited to the website https://virtual-mall-phi.vercel.app/ (the
+            "Site") and any related services or products (collectively, the
+            "Services"), you agree to comply with and be bound by these Terms
+            and Conditions ("Terms").
+          </p>
+          <p>
+            If you do not agree with these Terms, please do not use our
+            Services.
+          </p>
 
-                    <h2 className="text-2xl font-semibold mt-6 mb-3">16. CONTACT US</h2>
-                    <p>If you have any questions or concerns regarding these Terms and Conditions, please contact us at:</p>
-                    <p>
-                        Virtual Mall Lahore<br />
-                        Lahore, Pakistan<br />
-                        Email: [Email Address]
-                    </p>
-                </div>
-            </ScrollArea>
+          <h2 className="text-2xl font-semibold mt-6 mb-3">2. DEFINITIONS</h2>
+          <ul>
+            <li>
+              <strong>Buyer</strong> refers to any individual or entity who
+              purchases products through the Virtual Mall Lahore platform.
+            </li>
+            <li>
+              <strong>Seller</strong> refers to any individual or entity who
+              lists and sells products through the Virtual Mall Lahore platform.
+            </li>
+            <li>
+              <strong>Platform</strong> refers to the Virtual Mall Lahore
+              marketplace, including the website, mobile app, and associated
+              services.
+            </li>
+            <li>
+              <strong>Transaction</strong> refers to any purchase or sale
+              conducted on the Platform.
+            </li>
+          </ul>
+
+          {/* Continue with the rest of the sections */}
+
+          <h2 className="text-2xl font-semibold mt-6 mb-3">16. CONTACT US</h2>
+          <p>
+            If you have any questions or concerns regarding these Terms and
+            Conditions, please contact us at:
+          </p>
+          <p>
+            Virtual Mall Lahore
+            <br />
+            Lahore, Pakistan
+            <br />
+            Email: [Email Address]
+          </p>
         </div>
-    )
-}
+      </ScrollArea>
 
+      <Button
+        variant="outline"
+        onClick={handleRedirect}
+        size="lg"
+        className="flex-gap-4 bg-purple-500 text-white font-semibold hover:bg-purple-600 transition-all duration-300 transform hover:scale-105 mt-6"
+      >
+        Back to Home
+      </Button>
+    </div>
+  );
+};
 
-
-export default TermsAndConditions;
+export default MyComponent;
