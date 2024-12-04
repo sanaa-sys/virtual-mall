@@ -6,9 +6,11 @@ import { auth, db, provider } from '@/app/lib/firebase'
 import { signInWithPopup } from 'firebase/auth'
 import { doc, setDoc, getDoc } from 'firebase/firestore'
 import { Button } from '@/components/ui/button'
+import { useAppContext } from "../context/AppContext";
 
 
 export default function GoogleAuth({ mode }) {
+    const { userEmail, setUser } = useAppContext();
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
     const router = useRouter()
@@ -22,7 +24,7 @@ export default function GoogleAuth({ mode }) {
 
             const userRef = doc(db, 'users', user.uid)
             const userSnap = await getDoc(userRef)
-
+            setUser(user.email);
             if (!userSnap.exists()) {
                 await setDoc(userRef, {
                     name: user.displayName,

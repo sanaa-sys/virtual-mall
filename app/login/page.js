@@ -70,7 +70,7 @@ export default function Login() {
                   id="email"
                   type="email"
                   placeholder="m@example.com"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setUser(e.target.value)}
                   required
                   className="w-full p-2 border rounded"
                   whileFocus={{ scale: 1.05 }}
