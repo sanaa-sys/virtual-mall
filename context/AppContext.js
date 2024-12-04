@@ -1,4 +1,3 @@
-// context/AppContext.js
 "use client";
 import React, { createContext, useContext, useState } from 'react';
 
@@ -7,7 +6,7 @@ const AppContext = createContext();
 
 // Create a provider component
 export const AppProvider = ({ children }) => {
-    const [userEmail, setUser] = useState(null);
+    const [userEmail, setUser] = useState(null); // You may want to set this after login
     const [category, setCategory] = useState(null);
     const [cart, setCart] = useState([]);
     const [wishlist, setWishlist] = useState([]);

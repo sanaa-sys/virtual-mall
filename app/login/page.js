@@ -13,18 +13,25 @@ import { useAppContext } from "../../context/AppContext";
 import { motion } from "framer-motion"; // Import framer-motion
 
 export default function Login() {
+  const [email, setEmail] = useState(""); // Added email state
   const [password, setPassword] = useState("");
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const { userEmail, setUser } = useAppContext();
+  const { setUser } = useAppContext(); // Only need setUser from context
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
+      // Attempt to sign in with Firebase
       await signInWithEmailAndPassword(email, password);
       toast.success("Logged in successfully!");
+
+      // Set user email in context after successful login
+      setUser(email);
+
+      // Redirect to home page after successful login
       router.push("/home");
     } catch (error) {
       toast.error(`Error: ${error.message}`);
@@ -35,11 +42,9 @@ export default function Login() {
 
   return (
     <>
-      {/* ToastContainer moved to the root */}
       <ToastContainer />
 
       <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2 bg-gradient-to-tr from-indigo-200 via-zinc-50 to-indigo-300 overflow-hidden">
-        {/* Image Section */}
         <motion.div
           className="flex items-center justify-center min-h-screen"
           initial={{ scale: 0 }}
@@ -69,8 +74,9 @@ export default function Login() {
                 <motion.input
                   id="email"
                   type="email"
+                  value={email} // Set the email value to state
+                  onChange={(e) => setEmail(e.target.value)} // Update email on change
                   placeholder="m@example.com"
-                  onChange={(e) => setUser(e.target.value)}
                   required
                   className="w-full p-2 border rounded"
                   whileFocus={{ scale: 1.05 }}

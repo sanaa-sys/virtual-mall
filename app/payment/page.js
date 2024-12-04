@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -30,63 +31,69 @@ export default function PaymentPage() {
 
   // Function to send order confirmation email
   const sendOrderConfirmationEmail = (emailParams) => {
+    if (!emailParams.customer_email) {
+      console.error('No customer email provided.');
+      return;
+    }
+  
     emailjs.send(
-      'service_cio6onz',  // Replace with your EmailJS service ID
+      'service_cio6onz', // Replace with your EmailJS service ID
       'template_t5k24tp', // Replace with your EmailJS template ID
       emailParams,        // Parameters to fill in the template
-      '1oDlFZNgaaQnAhytI'      // Replace with your EmailJS user ID
+      '1oDlFZNgaaQnAhytI' // Replace with your EmailJS user ID
     ).then((result) => {
       console.log('Email sent successfully:', result);
     }).catch((error) => {
       console.error('Error sending email:', error);
     });
   };
+  
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsProcessing(true);
-
+  
     // Generate a unique order ID
     const orderId = uuidv4();  // This will generate a unique ID for each order
-
-    if (paymentMethod === "card") {
-      alert("Payment confirmed");
-
-      // Simulate payment processing
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // Prepare email data with the dynamic order ID
-      const emailParams = {
-        customer_email: userEmail, // Email of the user
-        order_id: orderId, // Unique order ID
-        total_amount: "$104.99", // Example total amount
-        payment_method: "Credit/Debit Card",
-      };
-
+  
+    // Check that userEmail is set
+    if (!userEmail) {
+      console.error("No user email set.");
+      setIsProcessing(false);
+      return;
+    }
+  
+    const emailParams = {
+      customer_email: userEmail, // Ensure this has the buyer's correct email
+      order_id: orderId,         // Unique order ID
+      total_amount: "$104.99",   // Example total amount
+      payment_method: paymentMethod === "card" ? "Credit/Debit Card" : "Cash on Delivery",
+    };
+  
+    try {
       // Send confirmation email
       sendOrderConfirmationEmail(emailParams);
-
-      // Redirect to confirmation page
-      router.push("/home");
-    } else {
-      // Cash on Delivery, show affirmation modal
-      setShowAffirmation(true);
-
-      // Prepare email data for COD
-      const emailParams = {
-        customer_email: userEmail,
-        order_id: orderId, // Unique order ID
-        total_amount: "$104.99",
-        payment_method: "Cash on Delivery",
-      };
-
-      // Send confirmation email for COD
-      sendOrderConfirmationEmail(emailParams);
+      
+      if (paymentMethod === "card") {
+        alert("Payment confirmed");
+  
+        // Simulate payment processing
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+  
+        // Redirect to confirmation page
+        router.push("/home");
+      } else {
+        // Show affirmation modal for COD
+        setShowAffirmation(true);
+      }
+    } catch (error) {
+      console.error("Error processing payment:", error);
     }
-
+  
     setIsProcessing(false);
   };
-
+  
   const handleCloseAffirmation = () => {
     setShowAffirmation(false);
     router.push("/home");
