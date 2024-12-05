@@ -1,35 +1,22 @@
 import { useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function AffirmationModal({ isOpen, onClose, onConfirm }) {
+export function EmailConfirmationModal({ isOpen, onClose, onConfirm }) {
   const [email, setEmail] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (typeof onConfirm === 'function') {
-      onConfirm(email);
-    }
-    onClose();
+    onConfirm(email);
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Order Placed Successfully</DialogTitle>
-          <DialogDescription>
-            Your order has been placed successfully. You will pay for your order when it is delivered to you.
-          </DialogDescription>
+          <DialogTitle>Confirm Your Email</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
@@ -44,7 +31,6 @@ export function AffirmationModal({ isOpen, onClose, onConfirm }) {
                 onChange={(e) => setEmail(e.target.value)}
                 className="col-span-3"
                 required
-                placeholder="Enter your email"
               />
             </div>
           </div>
@@ -56,4 +42,3 @@ export function AffirmationModal({ isOpen, onClose, onConfirm }) {
     </Dialog>
   );
 }
-
