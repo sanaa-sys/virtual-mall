@@ -45,7 +45,7 @@ export default function PaymentPage() {
 
     // Owner email
     const ownerEmailParams = {
-      owner_email: "afsbibi@gmail.com", // Replace with the owner’s email
+      owner_email: "burjamaie1234@gmail.com", // Replace with the owner’s email
       //customer_email: emailParams.customer_email,
       order_id: emailParams.order_id,
       total_amount: emailParams.total_amount,
