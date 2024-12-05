@@ -1,10 +1,9 @@
-
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
-import { v4 as uuidv4 } from 'uuid';  // Import UUID library
+import { Loader2 } from 'lucide-react';
+import { v4 as uuidv4 } from 'uuid';
 import emailjs from 'emailjs-com';
 
 import { Button } from "@/components/ui/button";
@@ -20,81 +19,100 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { CardPaymentForm } from "./card-payment-form";
 import { AffirmationModal } from "@/components/ui/confirmation-modal";
+import { EmailConfirmationModal } from "@/components/ui/email_confirmation";
 import { useAppContext } from "../../context/AppContext";
 
 export default function PaymentPage() {
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [isProcessing, setIsProcessing] = useState(false);
   const [showAffirmation, setShowAffirmation] = useState(false);
+  const [showEmailConfirmation, setShowEmailConfirmation] = useState(false);
   const router = useRouter();
     const { userEmail } = useAppContext();
     console.log(userEmail);
 
-  // Function to send order confirmation email
   const sendOrderConfirmationEmail = (emailParams) => {
-    if (!emailParams.customer_email) {
-      console.error('No customer email provided.');
-      return;
-    }
-  
+    // Customer email
     emailjs.send(
-      'service_cio6onz', // Replace with your EmailJS service ID
-      'template_t5k24tp', // Replace with your EmailJS template ID
-      emailParams,        // Parameters to fill in the template
-      '1oDlFZNgaaQnAhytI' // Replace with your EmailJS user ID
+      'service_cio6onz', // Your EmailJS service ID
+      'template_for_owner', // Customer template ID
+      emailParams,
+      '1oDlFZNgaaQnAhytI' // Your EmailJS public key
     ).then((result) => {
-      console.log('Email sent successfully:', result);
+      console.log('Customer email sent successfully:', result);
     }).catch((error) => {
-      console.error('Error sending email:', error);
+      console.error('Error sending customer email:', error);
     });
+
+    // Owner email
+    const ownerEmailParams = {
+      owner_email: "burjamaie1234@gmail.com", // Replace with the owner’s email
+      //customer_email: emailParams.customer_email,
+      order_id: emailParams.order_id,
+      total_amount: emailParams.total_amount,
+      payment_method: emailParams.payment_method
+    };
+
+    emailjs.send(
+      'service_cio6onz', // Your EmailJS service ID
+      'template_t5k24tp', // New template for owner
+      ownerEmailParams,
+      '1oDlFZNgaaQnAhytI' // Your EmailJS public key
+    ).then((result) => {
+      console.log('Owner email sent successfully:', result);
+    }).catch((error) => {
+      console.error('Error sending owner email:', error);
+      console.error('Error details:', JSON.stringify(error)); // Log the error details
+    });
+    
   };
-  
-  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    // Show email confirmation modal if payment method is card
+    if (paymentMethod === "card") {
+      setShowEmailConfirmation(true); // Show modal here
+    } else {
+      processPayment(userEmail); // Process payment for COD
+    }
+  };
+
+  const processPayment = async (confirmedEmail) => {
     setIsProcessing(true);
+    const orderId = uuidv4();
   
-    // Generate a unique order ID
-    const orderId = uuidv4();  // This will generate a unique ID for each order
-  
-    // Check that userEmail is set
-    if (!userEmail) {
-      console.error("No user email set.");
-      setIsProcessing(false);
-      return;
+    if (paymentMethod === "card") {
+      alert("Payment confirmed");
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate processing time
     }
   
     const emailParams = {
-      customer_email: userEmail, // Ensure this has the buyer's correct email
-      order_id: orderId,         // Unique order ID
-      total_amount: "$104.99",   // Example total amount
+      customer_email: confirmedEmail, // Ensure the correct customer email is passed here
+      order_id: orderId,
+      total_amount: "$104.99",
       payment_method: paymentMethod === "card" ? "Credit/Debit Card" : "Cash on Delivery",
     };
   
-    try {
-      // Send confirmation email
-      sendOrderConfirmationEmail(emailParams);
-      
-      if (paymentMethod === "card") {
-        alert("Payment confirmed");
+    console.log("Email Params in processPayment:", emailParams); // Log emailParams for debugging
   
-        // Simulate payment processing
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+    // Send emails to both customer and owner
+    sendOrderConfirmationEmail(emailParams);
   
-        // Redirect to confirmation page
-        router.push("/home");
-      } else {
-        // Show affirmation modal for COD
-        setShowAffirmation(true);
-      }
-    } catch (error) {
-      console.error("Error processing payment:", error);
+    if (paymentMethod === "cod") {
+      setShowAffirmation(true);
+    } else {
+      router.push("/home");
     }
   
     setIsProcessing(false);
   };
   
+
+  const handleEmailConfirmation = (confirmedEmail) => {
+    setShowEmailConfirmation(false);
+    processPayment(confirmedEmail);
+  };
+
   const handleCloseAffirmation = () => {
     setShowAffirmation(false);
     router.push("/home");
@@ -188,6 +206,11 @@ export default function PaymentPage() {
       <AffirmationModal
         isOpen={showAffirmation}
         onClose={handleCloseAffirmation}
+      />
+      <EmailConfirmationModal
+        isOpen={showEmailConfirmation}
+        onClose={() => setShowEmailConfirmation(false)}
+        onConfirm={handleEmailConfirmation} // Confirm email input
       />
     </div>
   );

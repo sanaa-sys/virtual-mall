@@ -1,25 +1,18 @@
-"use client";
+'use client';
 import { useState } from "react";
-
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import NavBar from "@/components/ui/navbar";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useAppContext } from "../../context/AppContext";
 import Link from "next/link";
 import emailjs from "emailjs-com";
 
 export default function CartPage() {
   const { cart, setCart } = useAppContext();
-    console.log(cart);
+  console.log(cart);
+
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity >= 0) {
       setCart((items) =>
@@ -41,6 +34,37 @@ export default function CartPage() {
   const tax = subtotal * 0.1; // Assuming 10% tax
   const total = subtotal + tax;
 
+  // Function to send the email
+  const sendOrderConfirmationEmail = (orderDetails) => {
+    emailjs
+      .send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", orderDetails, "YOUR_USER_ID")
+      .then(
+        (response) => {
+          console.log("Email sent successfully:", response);
+        },
+        (error) => {
+          console.log("Failed to send email:", error);
+        }
+      );
+  };
+
+  // Handle checkout
+  const handleCheckout = () => {
+    // Assuming the user has an email, name, etc.
+    const orderDetails = {
+      customer_name: "John Doe", // Replace with dynamic user data
+      customer_email: "johndoe@example.com", // Replace with dynamic user email
+      order_id: new Date().toISOString(), // Use a dynamic order ID or a unique ID
+      subtotal: subtotal.toFixed(2),
+      tax: tax.toFixed(2),
+      total: total.toFixed(2),
+      product_list: cart.map((item) => `${item.name} (x${item.quantity})`).join(", "),
+      shipping_address: "123 Main St, City", // Replace with dynamic address
+    };
+
+    sendOrderConfirmationEmail(orderDetails);
+  };
+
   if (cart.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
@@ -53,8 +77,8 @@ export default function CartPage() {
   }
 
   return (
-      <div className="container mx-auto px-4 py-8">
-          <NavBar />
+    <div className="container mx-auto px-4 py-8">
+      <NavBar />
       <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="lg:w-2/3">
@@ -134,10 +158,15 @@ export default function CartPage() {
             <div className="flex justify-between font-semibold text-lg mt-4 pt-4 border-t">
               <span>Total</span>
               <span>${total.toFixed(2)}</span>
-                      </div>
-                      <Link href="/payment" passHref className="w-full">
-                          <Button className="w-full mt-6">Proceed to Checkout</Button>
-                      </Link>
+            </div>
+            <Link href="/payment" passHref className="w-full">
+              <Button
+                className="w-full mt-6"
+                onClick={handleCheckout}
+              >
+                Proceed to Checkout
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
