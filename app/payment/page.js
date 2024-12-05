@@ -27,7 +27,8 @@ export default function PaymentPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showAffirmation, setShowAffirmation] = useState(false);
   const router = useRouter();
-  const { userEmail } = useAppContext();
+    const { userEmail } = useAppContext();
+    console.log(userEmail);
 
   // Function to send order confirmation email
   const sendOrderConfirmationEmail = (emailParams) => {
