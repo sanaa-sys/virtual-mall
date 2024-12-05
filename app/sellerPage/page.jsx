@@ -1,195 +1,318 @@
 "use client";
-import { useState } from "react";
-import { Minus, Plus, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { v4 as uuidv4 } from 'uuid';
-import NavBar from "@/components/ui/navbar";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { useAppContext } from "../../context/AppContext";
-import Link from "next/link";
 import emailjs from "emailjs-com";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { DollarSign, Package, BarChart, ShieldCheck } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import Footer from "@/components/Footer";
+import ThankYouPopup from "@/components/ThankYouPopup";
+import { useRouter } from "next/navigation";
+import { useAppContext } from "../../context/AppContext";
 
-export default function CartPage() {
-  const { cart, setCart } = useAppContext();
-  const [buyerEmail, setBuyerEmail] = useState(""); // Add buyer's email state
+const SellerPage = () => {
 
-  const updateQuantity = (id, newQuantity) => {
-    if (newQuantity >= 0) {
-      setCart((items) =>
-        items.map((item) =>
-          item.id === id ? { ...item, quantity: newQuantity } : item
-        )
-      );
-    }
-  };
-
-  const removeItem = (id) => {
-    setCart((items) => items.filter((item) => item.id !== id));
-  };
-
-  const subtotal = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-  const tax = subtotal * 0.1; // Assuming 10% tax
-  const total = subtotal + tax;
-
-  const handleProceedToCheckout = () => {
-    if (buyerEmail === "") {
-      alert("Please enter your email to proceed.");
-      return;
-    }
-
-    const productList = cart.map(item => `${item.name} (Qty: ${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}`).join("\n");
-
-    // Send confirmation email using EmailJS
-    emailjs.send(
-      "service_cio6onz", // Replace with your EmailJS service ID
-      "template_t5k24tp", // Replace with your EmailJS template ID
-      {
-        buyer_email: buyerEmail, // The buyer's email
-        order_id: "123456", // Example order ID (replace with actual ID if needed)
-        payment_method: "Credit Card", // Example payment method (replace with actual payment method if available)
-        order_total: total.toFixed(2), // Order total
-        product_list: productList, // List of products in the cart
-        from_name: "Virtual Mall", // Sender's name
-      },
-      "1oDlFZNgaaQnAhytI" // Replace with your EmailJS user ID
-    )
-    .then((result) => {
-      console.log("Email sent successfully!");
-    })
-    .catch((error) => {
-      console.log("Error sending email:", error);
+    const router = useRouter();
+    const [showThankYou, setShowThankYou] = useState(false);
+    const [formData, setFormData] = useState({
+        fullName: "",
+        email: "",
+        phoneNumber: "",
+        businessName: "",
+        productCategory: "",
+        agreeTerms: false, // State for checkbox
+        socialLink: "", // Initial state for socialLink
     });
-  };
 
-  if (cart.length === 0) {
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
+    const handleCheckboxChange = (checked) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            agreeTerms: checked,
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const templateParams = {
+            fullName: formData.fullName,
+            email: formData.email,
+            phoneNumber: formData.phoneNumber,
+            businessName: formData.businessName,
+            productCategory: formData.productCategory,
+            socialLink: formData.socialLink,
+        };
+
+        emailjs
+            .send(
+                "service_cio6onz",
+                "template_579m15j",
+                templateParams,
+                "1oDlFZNgaaQnAhytI"
+            )
+            .then((response) => {
+                console.log("Email sent successfully:", response);
+                setShowThankYou(true);
+            })
+            .catch((error) => {
+                console.error("Error sending email:", error);
+            });
+    };
+
+    const handleClosePopup = () => {
+        setShowThankYou(false);
+        router.push("/home");
+    };
+
+    const benefits = [
+        {
+            icon: <DollarSign className="w-12 h-12 text-green-500" />,
+            title: "Increase Your Revenue",
+            description: "Tap into our large customer base and boost your sales.",
+        },
+        {
+            icon: <Package className="w-12 h-12 text-blue-500" />,
+            title: "Easy Inventory Management",
+            description:
+                "Our tools make it simple to manage your products and orders.",
+        },
+        {
+            icon: <BarChart className="w-12 h-12 text-purple-500" />,
+            title: "Insightful Analytics",
+            description: "Get detailed reports and insights to grow your business.",
+        },
+        {
+            icon: <ShieldCheck className="w-12 h-12 text-red-500" />,
+            title: "Secure Transactions",
+            description:
+                "We ensure safe and secure transactions for you and your customers.",
+        },
+    ];
+
     return (
-      <div className="flex flex-col items-center justify-center h-screen">
-        <h1 className="text-2xl font-bold mb-4">Your cart is empty</h1>
-        <Link href="/productList" passHref>
-          <Button>Continue Shopping</Button>
-        </Link>
-      </div>
-    );
-  }
+        <div className="min-h-screen bg-gradient-to-b from-blue-100 to-purple-100">
+            <header className="bg-white shadow-md">
+                <div className="container mx-auto px-6 py-4">
+                    <h1 className="text-3xl font-bold text-gray-800">
+                        Become a Seller on Virtual Mall Lahore
+                    </h1>
+                </div>
+            </header>
 
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <NavBar />
-      <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
-      <div className="flex flex-col lg:flex-row gap-8">
-        <div className="lg:w-2/3">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Product</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Quantity</TableHead>
-                <TableHead>Total</TableHead>
-                <TableHead>Trash</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {cart.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell>${item.price.toFixed(2)}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center space-x-2">
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={() =>
-                          updateQuantity(item.id, item.quantity - 1)
-                        }
-                      >
-                        <Minus className="h-4 w-4" />
-                      </Button>
-                      <Input
-                        type="number"
-                        value={item.quantity}
-                        onChange={(e) =>
-                          updateQuantity(item.id, parseInt(e.target.value))
-                        }
-                        className="w-16 text-center"
-                      />
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={() =>
-                          updateQuantity(item.id, item.quantity + 1)
-                        }
-                      >
-                        <Plus className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    ${(item.price * item.quantity).toFixed(2)}
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => removeItem(item.id)}
+            <main className="container mx-auto px-6 py-8">
+                <section className="mb-12">
+                    <motion.h2
+                        className="text-2xl font-semibold text-gray-800 mb-4"
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
                     >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-        <div className="lg:w-1/3">
-          <div className="bg-gray-100 p-6 rounded-lg">
-            <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-            <div className="flex justify-between mb-2">
-              <span>Subtotal</span>
-              <span>${subtotal.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between mb-2">
-              <span>Tax</span>
-              <span>${tax.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between font-semibold text-lg mt-4 pt-4 border-t">
-              <span>Total</span>
-              <span>${total.toFixed(2)}</span>
-            </div>
+                        Why Sell on Virtual Mall Lahore?
+                    </motion.h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {benefits.map((benefit, index) => (
+                            <motion.div
+                                key={index}
+                                className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                            >
+                                <div className="mb-4">{benefit.icon}</div>
+                                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                                    {benefit.title}
+                                </h3>
+                                <p className="text-gray-600">{benefit.description}</p>
+                            </motion.div>
+                        ))}
+                    </div>
+                </section>
 
-            {/* Add an email input field for buyer */}
-            <div className="mt-4">
-              <label htmlFor="buyerEmail" className="block mb-2">
-                Enter your email:
-              </label>
-              <Input
-                type="email"
-                id="buyerEmail"
-                value={buyerEmail}
-                onChange={(e) => setBuyerEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="w-full"
-                required
-              />
-            </div>
+                <section className="mb-12">
+                    <motion.h2
+                        className="text-2xl font-semibold text-gray-800 mb-4"
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        How to Get Started
+                    </motion.h2>
+                    <motion.ol
+                        className="list-decimal list-inside space-y-2 text-gray-600"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                    >
+                        <li>Fill out the seller application form below</li>
+                        <li>Verify your email and complete your seller profile</li>
+                        <li>List your products and set up your shop</li>
+                        <li>Start selling and grow your business!</li>
+                    </motion.ol>
+                </section>
 
-            {/* Proceed to checkout button */}
-            <Button className="w-full mt-6" onClick={handleProceedToCheckout}>
-              Proceed to Checkout
-            </Button>
-          </div>
+                <section>
+                    <motion.h2
+                        className="text-2xl font-semibold text-gray-800 mb-4"
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        Seller Application
+                    </motion.h2>
+                    <motion.form
+                        onSubmit={handleSubmit}
+                        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                    >
+                        <div className="mb-4">
+                            <Label
+                                htmlFor="fullName"
+                                className="block text-gray-700 text-sm font-bold mb-2"
+                            >
+                                Full Name
+                            </Label>
+                            <Input
+                                type="text"
+                                id="fullName"
+                                name="fullName"
+                                value={formData.fullName}
+                                onChange={handleInputChange}
+                                required
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <Label
+                                htmlFor="email"
+                                className="block text-gray-700 text-sm font-bold mb-2"
+                            >
+                                Email
+                            </Label>
+                            <Input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                                required
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <Label
+                                htmlFor="phoneNumber"
+                                className="block text-gray-700 text-sm font-bold mb-2"
+                            >
+                                Phone Number
+                            </Label>
+                            <Input
+                                type="tel"
+                                id="phoneNumber"
+                                name="phoneNumber"
+                                value={formData.phoneNumber}
+                                onChange={handleInputChange}
+                                required
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <Label
+                                htmlFor="socialLink"
+                                className="block text-gray-700 text-sm font-bold mb-2"
+                            >
+                                Social Link
+                            </Label>
+                            <Input
+                                type="url"
+                                id="socialLink"
+                                name="socialLink"
+                                value={formData.socialLink}
+                                onChange={handleInputChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <Label
+                                htmlFor="businessName"
+                                className="block text-gray-700 text-sm font-bold mb-2"
+                            >
+                                Business Name
+                            </Label>
+                            <Input
+                                type="text"
+                                id="businessName"
+                                name="businessName"
+                                value={formData.businessName}
+                                onChange={handleInputChange}
+                                required
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <Label
+                                htmlFor="productCategory"
+                                className="block text-gray-700 text-sm font-bold mb-2"
+                            >
+                                Product Category
+                            </Label>
+                            <Input
+                                type="text"
+                                id="productCategory"
+                                name="productCategory"
+                                value={formData.productCategory}
+                                onChange={handleInputChange}
+                                required
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                        </div>
+
+                        <div className="mb-4 flex items-center">
+                            <Checkbox
+                                checked={formData.agreeTerms} // Use checked for state management
+                                onCheckedChange={handleCheckboxChange} // Use onCheckedChange to handle checkbox change
+                                id="agreeTerms"
+                            />
+                            <Label
+                                htmlFor="agreeTerms"
+                                className="ml-2 text-sm text-gray-600"
+                            >
+                                I agree to the terms and conditions
+                            </Label>
+                        </div>
+
+                        <Button
+                            type="submit"
+                            disabled={!formData.agreeTerms}
+                            className="w-full bg-blue-500 text-white py-2 px-4 rounded"
+                        >
+                            Submit
+                        </Button>
+                    </motion.form>
+                </section>
+            </main>
+
+            {showThankYou && (
+                <ThankYouPopup
+                    message="Thank you for applying to become a seller on Virtual Mall Lahore!"
+                    onClose={handleClosePopup}
+                />
+            )}
+
+            <Footer />
         </div>
-      </div>
-    </div>
-  );
-}
+    );
+};
+
+export default SellerPage;

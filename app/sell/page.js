@@ -228,7 +228,7 @@ export default function SellPage() {
     const [loading, setLoading] = useState(false)
 
     const handleCategorySelect = (categoryName) => {
-        setSelectedCategory(categoryName)
+        setCategory(categoryName)
     }
 
     const handleSubmit = async (e) => {
