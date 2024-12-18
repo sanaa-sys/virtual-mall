@@ -38,5 +38,10 @@ next-env.d.ts
 .vs/virtual-mall/v16/.suo
 .vs/slnx.sqlite
 
-.env
+
 .vs/slnx.sqlite
+.env
+.env
+app/.env
+.env
+app/.env
