@@ -76,7 +76,7 @@ const HeaderTop = () => {
             transition={{ duration: 1.2 }}
           >
             <div className="text-black text-5xl font-extrabold overflow-hidden pr-10">
-              Virtual Mall Lahore
+              Virtual Store
             </div>
           
             <Button
