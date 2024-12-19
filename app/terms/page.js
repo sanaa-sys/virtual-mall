@@ -23,7 +23,7 @@ const MyComponent = () => {
           <h3 className="text-xl font-semibold mt-4 mb-2">About Us</h3>
           <p>
             This Site is owned and operated by Virtual Pakistan Pvt Limited
-            (Registration Number: 0080097). Virtual Mall Lahore is an e-commerce
+            (Registration Number: #####). Virtual Store is an e-commerce
             platform that connects Buyers and Sellers, offering a wide variety
             of products for sale.
           </p>
@@ -33,8 +33,8 @@ const MyComponent = () => {
           </h2>
           <p>
             By accessing and using the website, platform, and services of
-            Virtual Mall Lahore ("Company," "we," "us," "our"), including but
-            not limited to the website https://virtual-mall-phi.vercel.app/ (the
+            Virtual Store ("Company," "we," "us," "our"), including but
+            not limited to the website https://virtual-store-xyz.vercel.app/ (the
             "Site") and any related services or products (collectively, the
             "Services"), you agree to comply with and be bound by these Terms
             and Conditions ("Terms").
@@ -48,14 +48,14 @@ const MyComponent = () => {
           <ul>
             <li>
               <strong>Buyer</strong> refers to any individual or entity who
-              purchases products through the Virtual Mall Lahore platform.
+              purchases products through the Virtual Store platform.
             </li>
             <li>
               <strong>Seller</strong> refers to any individual or entity who
-              lists and sells products through the Virtual Mall Lahore platform.
+              lists and sells products through the Virtual Store platform.
             </li>
             <li>
-              <strong>Platform</strong> refers to the Virtual Mall Lahore
+              <strong>Platform</strong> refers to the Virtual Store
               marketplace, including the website, mobile app, and associated
               services.
             </li>
@@ -65,15 +65,13 @@ const MyComponent = () => {
             </li>
           </ul>
 
-          {/* Continue with the rest of the sections */}
-
           <h2 className="text-2xl font-semibold mt-6 mb-3">16. CONTACT US</h2>
           <p>
             If you have any questions or concerns regarding these Terms and
             Conditions, please contact us at:
           </p>
           <p>
-            Virtual Mall Lahore
+            Virtual Store
             <br />
             Lahore, Pakistan
             <br />
@@ -86,7 +84,7 @@ const MyComponent = () => {
         variant="outline"
         onClick={handleRedirect}
         size="lg"
-        className="flex-gap-4 bg-purple-500 text-white font-semibold hover:bg-purple-600 transition-all duration-300 transform hover:scale-105 mt-6"
+        className="flex-gap-4 bg-orange-200 text-black font-semibold hover:bg-red-200 transition-all duration-300 transform hover:scale-105 mt-6"
       >
         Back to Home
       </Button>

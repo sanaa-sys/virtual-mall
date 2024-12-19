@@ -53,7 +53,7 @@ const ProductList = () => {
   }
 
   return (
-    <div className="bg-gradient-to-r from-blue-200 to-purple-300">
+    <div className="bg-gradient-to-r from-red-200 to-orange-200">
       <NavBar />
       <Container>
         <Grid container spacing={4}>

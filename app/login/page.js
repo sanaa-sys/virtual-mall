@@ -44,14 +44,14 @@ export default function Login() {
     <>
       <ToastContainer />
 
-      <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2 bg-gradient-to-tr from-indigo-200 via-zinc-50 to-indigo-300 overflow-hidden">
+      <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2 bg-gradient-to-r from-red-200 to-orange-200 overflow-hidden">
         <motion.div
           className="flex items-center justify-center min-h-screen"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ duration: 1 }}
         >
-          <img src="/logo1.png" alt="Logo" className="rounded-full" />
+          <img src="/Virtualstore.png" alt="Logo" className="rounded-full" />
         </motion.div>
 
         <motion.div
@@ -96,7 +96,7 @@ export default function Login() {
               </div>
               <Button
                 type="submit"
-                className="w-full"
+                className="w-full" 
                 onClick={handleLogin}
                 disabled={loading}
               >

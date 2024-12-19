@@ -129,9 +129,9 @@ const HeaderMain = () => {
   };
 
   return (
-    <div className="border-b border-gray-200 py-6 bg-gradient-to-r from-blue-200 to-purple-300">
+    <div className="border-b border-gray-200 py-6 bg-gradient-to-r from-red-200 to-orange-200">
       <div className="container sm:flex justify-evenly items-center">
-      <div className="font-bold text-4xl text-center pr-3 pb-2 sm:pb-0 text-blackish"> <motion.img src="/logo1.png" alt="Logo" className="center rounded-full pl-2" style={{ width: "150px", height: "150px" }} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 1 }} /> </div>
+      <div className="font-bold text-4xl text-center pr-3 pb-2 sm:pb-0 text-blackish"> <motion.img src="/Virtualstore.png" alt="Logo" className="center rounded-full pl-2" style={{ width: "250px", height: "250px" }} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 1 }} /> </div>
 
         <div className="w-full sm:w-[300px] md:w-[70%] pl-2 pr-4 relative">
           <form onSubmit={handleSearch}>
@@ -171,7 +171,7 @@ const HeaderMain = () => {
       </div>
 
       {/* Render Search Results */}
-      <div className="container py-4">
+      <div className="container ">
         {products.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {products.map((product) => (

@@ -69,7 +69,7 @@ const AboutUs = () => {
       <header className="bg-gradient-to-r from-blue-200 to-purple-300 shadow-md">
         <div className="container mx-auto px-6 py-4">
           <h1 className="text-3xl font-bold text-gray-800">
-            About Virtual Mall
+            About Virtual Store
           </h1>
         </div>
       </header>
@@ -90,12 +90,12 @@ const AboutUs = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Founded in 2010, ShopEase has grown from a small startup to one of
-            the leading e-commerce platforms in the industry. Our mission is to
-            provide a seamless shopping experience with a wide range of
-            high-quality products at competitive prices. We're passionate about
-            connecting buyers with sellers and fostering a community of
-            satisfied customers.
+            Founded in 2020, Virtual Store has rapidly become one of the most
+            trusted e-commerce platforms in the region. We aim to provide a
+            seamless and convenient shopping experience, connecting buyers with
+            sellers across various categories. Our goal is to offer a wide
+            variety of quality products at competitive prices, all while
+            maintaining excellent customer service and fast delivery times.
           </motion.p>
         </section>
 

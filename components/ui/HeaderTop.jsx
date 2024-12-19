@@ -83,7 +83,7 @@ const HeaderTop = () => {
               variant="outline"
               onClick={redirect}
               size="lg"
-              className="flex-gap-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105"
+              className="flex-gap-4 bg-gradient-to-r from-red-400 to-orange-600 text-white font-semibold hover:from-orange-600 hover:to-red-600 transition-all duration-300 transform hover:scale-105"
             >
               Be a Seller on Virtual Mall
             </Button>

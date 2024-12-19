@@ -68,7 +68,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="bg-gradient-to-r from-blue-200 to-purple-300">
+    <div className="bg-gradient-to-r from-red-200 to-orange-200">
       <HeaderTop />
       <HeaderMain />
       <NavBar />

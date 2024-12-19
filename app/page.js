@@ -42,16 +42,16 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen bg-gradient-to-r from-blue-200 to-purple-300">
-      {/* Logo Section with Slide to Top Animation */}
-      <motion.img
-        src="/logo1.png"
-        alt="Logo"
-        className="center rounded-full"
+    <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2 bg-gradient-to-r from-red-200 to-orange-200 overflow-hidden">
+      {/* Logo Section with Slide to Top Animation */} 
+      <motion.div
+        className="flex items-center justify-center min-h-screen"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ duration: 1 }}
-      />
+      >
+        <img src="/Virtualstore.png" alt="Logo" className="rounded-full" />
+      </motion.div>
       {/* Sign Up Form with Slide Up Animation */}
       <motion.div
         className="flex items-center justify-center py-12"
