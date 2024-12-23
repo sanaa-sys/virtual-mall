@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ShoppingCart, User, Menu, X } from "lucide-react";
 import { useAppContext } from "../../context/AppContext";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -65,6 +65,12 @@ export default function Navbar() {
               >
                 Seller
               </button>
+              <Link
+              className="text-muted-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
+              href="/literacy"
+            >
+              Financial Literacy
+            </Link>
             </div>
           </div>
           <div className="hidden md:block">
@@ -134,6 +140,12 @@ export default function Navbar() {
             >
               Seller
             </button>
+            <Link
+              className="navbar__link relative overflow-hidden hover:text-gray-900 transition-colors"
+              href="/literacy"
+            >
+              Financial Literacy
+            </Link>
           </div>
           <div className="pt-4 pb-3 border-t border-border">
             <div className="flex items-center px-5">
