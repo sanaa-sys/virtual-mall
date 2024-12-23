@@ -22,9 +22,9 @@ const blogPosts = [
     {
         id: 4,
         title: "Keeping Card Details Safe",
-        excerpt: "Learn how to keep card details safe during online transactions.",
+        excerpt: "Protect your financial information with these essential tips for online shopping.",
         slug: "safe-card-details"
-    },
+    }
 ]
 
 export default function BlogPostList() {
