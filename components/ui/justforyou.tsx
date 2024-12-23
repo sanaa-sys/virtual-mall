@@ -57,8 +57,8 @@ const products: Product[] = [
     id: 5,
     name: "GLUTAPONE Extreme Strong Whitenin...",
     image: "/gulap.jpeg",
-    price: 730,
-    originalPrice: 803,
+    price: 100,
+    originalPrice: 200,
     discount: 9,
     rating: 4,
     reviews: 4539,
@@ -99,10 +99,10 @@ function ProductCard({ product }: { product: Product }) {
         </h3>
         <div className="mt-2 flex items-center">
           <p className="text-lg font-semibold text-red-600">
-            Rs.{product.price.toLocaleString()}
+            ${product.price.toLocaleString()}
           </p>
           <p className="ml-2 text-sm text-gray-500 line-through">
-            Rs.{product.originalPrice.toLocaleString()}
+            ${product.originalPrice.toLocaleString()}
           </p>
           <p className="ml-2 text-sm font-medium text-green-600">
             -{product.discount}%
@@ -131,7 +131,8 @@ function ProductCard({ product }: { product: Product }) {
 export default function JustForYou() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-semibold mb-6 text-black">Just For You</h2>
+          <h2 className="text-2xl font-semibold mb-6 text-black">Discount</h2>
+          <p className="text-m font-semibold mb-6 text-black">Understanding and utilizing discounts is an essential part of financial literacy. Discounts help you save money on purchases, allowing you to allocate funds toward other priorities like savings or debt repayment. Always look for sales, coupons, or promotional offers to make the most of your spending.</p>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />

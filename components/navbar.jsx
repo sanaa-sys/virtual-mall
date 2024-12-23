@@ -40,6 +40,12 @@ const NavBar = () => {
                                 >
                                     Sell
                                 </Link>
+                                <Link
+                                    className="navbar__link relative overflow-hidden hover:text-gray-900 transition-colors"
+                                    href="/literacy"
+                                >
+                                    Financial Literacy
+                                </Link>
                             </li>
                         </ul>
                     </div>
