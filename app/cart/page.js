@@ -1,17 +1,28 @@
-'use client';
+"use client";
 import { useState } from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import NavBar from "@/components/ui/navbar";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useAppContext } from "../../context/AppContext";
 import Link from "next/link";
 import emailjs from "emailjs-com";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
   const { cart, setCart } = useAppContext();
-  console.log(cart);
+  const [budget, setBudget] = useState(0); // State for budget input
+  const [budgetExceeded, setBudgetExceeded] = useState(false); // State to track if budget is exceeded
+
+  const router = useRouter(); // Initialize router here
 
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity >= 0) {
@@ -37,7 +48,7 @@ export default function CartPage() {
   // Function to send the email
   const sendOrderConfirmationEmail = (orderDetails) => {
     emailjs
-      .send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", orderDetails, "YOUR_USER_ID")
+      .send("service_cio6onz", "template_t5k24tp", orderDetails, "YOUR_USER_ID")
       .then(
         (response) => {
           console.log("Email sent successfully:", response);
@@ -50,19 +61,28 @@ export default function CartPage() {
 
   // Handle checkout
   const handleCheckout = () => {
-    // Assuming the user has an email, name, etc.
-    const orderDetails = {
-      customer_name: "John Doe", // Replace with dynamic user data
-      customer_email: "johndoe@example.com", // Replace with dynamic user email
-      order_id: new Date().toISOString(), // Use a dynamic order ID or a unique ID
-      subtotal: subtotal.toFixed(2),
-      tax: tax.toFixed(2),
-      total: total.toFixed(2),
-      product_list: cart.map((item) => `${item.name} (x${item.quantity})`).join(", "),
-      shipping_address: "123 Main St, City", // Replace with dynamic address
-    };
+    const numericBudget = parseFloat(budget);
+    if (numericBudget < total) {
+      alert(`Your budget is too low! Your total is $${total.toFixed(2)}`);
+    } else {
+      alert(`Budget is sufficient! Proceeding to checkout.`);
+      router.push("/payment"); // Use router here
+      // Prepare order details for email
+      const orderDetails = {
+        customer_name: "John Doe", // Replace with dynamic user data
+        customer_email: "johndoe@example.com", // Replace with dynamic user email
+        order_id: new Date().toISOString(), // Use a dynamic order ID or a unique ID
+        subtotal: subtotal.toFixed(2),
+        tax: tax.toFixed(2),
+        total: total.toFixed(2),
+        product_list: cart
+          .map((item) => `${item.name} (x${item.quantity})`)
+          .join(", "),
+        shipping_address: "123 Main St, City", // Replace with dynamic address
+      };
 
-    sendOrderConfirmationEmail(orderDetails);
+      sendOrderConfirmationEmail(orderDetails); // Send the email after budget check passes
+    }
   };
 
   if (cart.length === 0) {
@@ -159,14 +179,28 @@ export default function CartPage() {
               <span>Total</span>
               <span>${total.toFixed(2)}</span>
             </div>
-            <Link href="/payment" passHref className="w-full">
-              <Button
-                className="w-full mt-6"
-                onClick={handleCheckout}
-              >
-                Proceed to Checkout
-              </Button>
-            </Link>
+
+            {/* Budget Input Field */}
+            <div className="mt-4">
+              <label className="block mb-2">Enter your budget:</label>
+              <Input
+                type="number"
+                value={budget}
+                onChange={(e) => setBudget(parseFloat(e.target.value))}
+                placeholder="Enter your budget"
+              />
+            </div>
+
+            {/* Budget Exceeded Warning */}
+            {budgetExceeded && (
+              <div className="mt-2 text-red-500">
+                Your total exceeds your budget. Please adjust your cart.
+              </div>
+            )}
+
+            <Button className="w-full mt-6" onClick={handleCheckout}>
+              Proceed to Checkout
+            </Button>
           </div>
         </div>
       </div>
