@@ -21,6 +21,7 @@ export default function CartPage() {
   const { cart, setCart } = useAppContext();
   const [budget, setBudget] = useState(0); // State for budget input
   const [budgetExceeded, setBudgetExceeded] = useState(false); // State to track if budget is exceeded
+  const [installments, setInstallments] = useState(null); // State for installment options
 
   const router = useRouter(); // Initialize router here
 
@@ -63,8 +64,10 @@ export default function CartPage() {
   const handleCheckout = () => {
     const numericBudget = parseFloat(budget);
     if (numericBudget < total) {
-      alert(`Your budget is too low! Your total is $${total.toFixed(2)}`);
+      setBudgetExceeded(true);
+      showInstallmentOptions(); // Show installment options when budget is low
     } else {
+      setBudgetExceeded(false);
       alert(`Budget is sufficient! Proceeding to checkout.`);
       router.push("/payment"); // Use router here
       // Prepare order details for email
@@ -83,6 +86,16 @@ export default function CartPage() {
 
       sendOrderConfirmationEmail(orderDetails); // Send the email after budget check passes
     }
+  };
+
+  // Show installment options
+  const showInstallmentOptions = () => {
+    const options = [3, 6, 12]; // Installments options: 3 months, 6 months, 12 months
+    const installmentOptions = options.map((months) => {
+      const installmentAmount = total / months;
+      return { months, installmentAmount: installmentAmount.toFixed(2) };
+    });
+    setInstallments(installmentOptions);
   };
 
   if (cart.length === 0) {
@@ -195,6 +208,19 @@ export default function CartPage() {
             {budgetExceeded && (
               <div className="mt-2 text-red-500">
                 Your total exceeds your budget. Please adjust your cart.
+              </div>
+            )}
+
+            {/* Display Installment Options */}
+            {installments && (
+              <div className="mt-4">
+                <h3 className="font-semibold">Installment Options:</h3>
+                {installments.map((option) => (
+                  <div key={option.months} className="flex justify-between mb-2">
+                    <span>{option.months} Months</span>
+                    <span>${option.installmentAmount} per month</span>
+                  </div>
+                ))}
               </div>
             )}
 
