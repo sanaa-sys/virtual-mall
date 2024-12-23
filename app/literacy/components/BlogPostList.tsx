@@ -24,6 +24,12 @@ const blogPosts = [
         title: "Keeping Card Details Safe",
         excerpt: "Protect your financial information with these essential tips for online shopping.",
         slug: "safe-card-details"
+    },
+    {
+        id: 5,
+        title: "Debt Awareness",
+        excerpt: "Understand debt to avoid financial strains.",
+        slug: "debt-awareness"
     }
 ]
 
@@ -34,7 +40,7 @@ export default function BlogPostList() {
                 <div key={post.id} className="border rounded-lg p-4 shadow-sm">
                     <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
                     <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                    <Link href={`/financial-literacy/blog/${post.slug}`} className="text-blue-600 hover:underline">
+                    <Link href={`/literacy/blog/${post.slug}`} className="text-blue-600 hover:underline">
                         Read more
                     </Link>
                 </div>

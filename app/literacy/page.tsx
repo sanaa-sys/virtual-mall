@@ -5,7 +5,7 @@ import CreditCardCalculator from './components/CreditCardCalculator'
 import ExpenseBreakdownCalculator from './components/ExpenseBreakdownCalculator'
 import ShoppingBudgetCalculator from './components/ShoppingBudgetCalculator'
 import ContactForm from './components/ContactForm'
-
+import MonthlyBudgetManager from './components/MonthlyBudgetManager'
 
 
 export default function FinancialLiteracyPage() {
@@ -20,7 +20,12 @@ export default function FinancialLiteracyPage() {
 
             <section className="mb-12">
                 <h2 className="text-2xl font-semibold mb-4">Financial Calculators</h2>
+
                 <div className="grid gap-6 md:grid-cols-2">
+                    <div>
+                        <h3 className="text-xl font-semibold mb-2">Monthly Budget Manager</h3>
+                        <MonthlyBudgetManager />
+                    </div>
                     <div>
                         <h3 className="text-xl font-semibold mb-2">Savings Goal Calculator</h3>
                         <SavingsCalculator />
