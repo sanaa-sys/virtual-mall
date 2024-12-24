@@ -45,7 +45,11 @@ const nextConfig = {
     maxInactiveAge: 60 * 60 * 1000,
     // Increase the number of pages that should be kept simultaneously in memory
     pagesBufferLength: 5,
-  },
+    },
+    experimental: {
+        missingSuspenseWithCSRBailout: false,
+    },
+
   images: {
     domains: ["fakestoreapi.com"], // Add this section at the top level
   },
