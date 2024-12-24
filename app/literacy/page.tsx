@@ -6,12 +6,17 @@ import ExpenseBreakdownCalculator from './components/ExpenseBreakdownCalculator'
 import ShoppingBudgetCalculator from './components/ShoppingBudgetCalculator'
 import ContactForm from './components/ContactForm'
 import MonthlyBudgetManager from './components/MonthlyBudgetManager'
-
+import LoyaltySystem from './components/LoyaltySystem'
 
 export default function FinancialLiteracyPage() {
     return (
         <div className="container mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold mb-6">Financial Literacy Center</h1>
+
+            <section className="mb-12">
+                <h2 className="text-2xl font-semibold mb-4">Your Financial Literacy Rewards</h2>
+                <LoyaltySystem />
+            </section>
 
             <section className="mb-12">
                 <h2 className="text-2xl font-semibold mb-4">Latest Articles</h2>

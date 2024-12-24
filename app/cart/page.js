@@ -17,11 +17,34 @@ import Link from "next/link";
 import emailjs from "emailjs-com";
 import { useRouter } from "next/navigation";
 
+const discountLevels = {
+    'Bronze': 0.05,
+    'Silver': 0.10,
+    'Gold': 0.15,
+    'Platinum': 0.20
+}
 export default function CartPage() {
   const { cart, setCart } = useAppContext();
-  const [budget, setBudget] = useState(0);
-  const [budgetExceeded, setBudgetExceeded] = useState(false);
-  const router = useRouter();
+  const [budget, setBudget] = useState(0); // State for budget input
+  const [budgetExceeded, setBudgetExceeded] = useState(false); // State to track if budget is exceeded
+    const [installments, setInstallments] = useState(null); // State for installment options
+    const [loyaltyPoints, setLoyaltyPoints] = useState(0)
+    const [loyaltyLevel, setLoyaltyLevel] = useState('')
+
+    const router = useRouter(); // Initialize router here
+
+    const points = localStorage.getItem('loyaltyPoints')
+    setLoyaltyPoints(points ? parseInt(points, 10) : 0)
+    setLoyaltyLevel(getLoyaltyLevel(points ? parseInt(points, 10) : 0))
+
+
+const getLoyaltyLevel = (point) => {
+    if (points >= 1000) return 'Platinum'
+    if (points >= 500) return 'Gold'
+    if (points >= 250) return 'Silver'
+    if (points >= 100) return 'Bronze'
+    return ''
+}
 
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity >= 0) {
@@ -42,7 +65,10 @@ export default function CartPage() {
     0
   );
   const tax = subtotal * 0.1; // Assuming 10% tax
-  const total = subtotal + tax;
+
+
+const discount = loyaltyLevel ? subtotal * discountLevels[loyaltyLevel] : 0;
+const total = subtotal + tax - discount;
 
   const sendOrderConfirmationEmail = (orderDetails) => {
     emailjs
@@ -167,7 +193,15 @@ export default function CartPage() {
             <div className="flex justify-between mb-2">
               <span>Subtotal</span>
               <span>${subtotal.toFixed(2)}</span>
-            </div>
+                      </div>
+                       {loyaltyLevel && (
+              <div className="flex items-center justify-end">
+                <Badge variant="outline" className="mr-2">{loyaltyLevel}</Badge>
+                <p className="text-green-600">
+                  Discount: -${discount.toFixed(2)} ({(discountLevels[loyaltyLevel] * 100).toFixed(0)}%)
+                </p>
+              </div>
+            )}
             <div className="flex justify-between mb-2">
               <span>Tax</span>
               <span>${tax.toFixed(2)}</span>

@@ -8,7 +8,7 @@ import { useAppContext } from "../../context/AppContext";
 
 const HeaderTop = () => {
   const { userEmail, setUser } = useAppContext();
-  const isVirtualMallSeller = userEmail?.endsWith('@virtualmall.com') ?? false;
+  const isVirtualMallSeller = userEmail?.endsWith('@virtualstore.com') ?? false;
   const router = useRouter();
   const redirect = () => {
     if (userEmail) {
