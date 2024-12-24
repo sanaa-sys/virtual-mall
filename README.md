@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Virtual Store  
 
-## Getting Started
+An innovative e-commerce website where people can buy and sell products while learning more about financial literacy. By integrating e-commerce with financial education, we aim to help users make informed financial decisions.  
 
-First, run the development server:
+## Features  
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Buy and Sell Products**:  
+  Browse a wide variety of products in categories such as electronics, fashion, home goods, and more. To sell products, users must first register their business details. Then they will receive an email with their login details in the format:  
+  `"sampleseller@virtualstore.com"`. Users can then go to the sell page and upload their product details.  
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Secure Transactions**:  
+  Payment processing with Stripe for card payments for safety and reliability, along with cash on delivery options. Buyer and seller protection policies ensure trust.  
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Product Reviews and Ratings**:  
+  Help the community by providing honest feedback on products.  
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Educational Resources**:  
+  Access blogs to learn financial concepts like compound interest, debt management, and credit scores.  
 
-## Learn More
+- **Financial Tools**:  
+  - Budget trackers and expense calculators to manage your earnings and spending effectively.  
+  - Product affordability analyzers to avoid impulse purchases.  
 
-To learn more about Next.js, take a look at the following resources:
+- **Loyalty System**:  
+  Reward users when they read articles about financial literacy and use any of the calculators. Users can get a range of discounts when they reach different levels.  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Frontend**: Next.js, TailwindCSS  
+- **Database and Backend**: Firebase  
+- **Payment Gateway**: Stripe  
 
-## Deploy on Vercel
+## License  
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is licensed under the MIT License. See the LICENSE file for more details.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+
+
