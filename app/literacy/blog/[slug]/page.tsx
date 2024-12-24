@@ -1,6 +1,5 @@
-﻿import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
+﻿import { notFound } from 'next/navigation'
+import Link from 'next/link'
 
 // This would typically come from a database or CMS
 const blogPosts = {
@@ -61,41 +60,18 @@ const blogPosts = {
       </ul>
       <p>By following these tips, you can reduce the risk of fraud and keep your financial information secure.</p>
     `
-    },
-    "debt-awareness": {
-        title: "Debt Awareness",
-        content: `
-      <p>Debt is a common financial tool, but it's essential to understand its impact on your financial health. Here are some key points:</p>
-      <ul>
-        <li><strong>Types of debt:</strong> There are two main types of debt: secured (backed by collateral) and unsecured (no collateral).</li>
-        <li><strong>Interest rates:</strong> The interest rate on your debt determines how much you'll pay in addition to the principal amount.</li>
-        <li><strong>Repayment strategies:</strong> Consider the snowball method (paying off the smallest debt first) or the avalanche method (paying off the highest interest debt first).</li>
-        <li><strong>Impact on credit:</strong> Managing debt responsibly can improve your credit score, while excessive debt can harm it.</li>
-        <li><strong>Avoid unnecessary debt:</strong> Only borrow what you can afford to repay, and avoid high-interest loans whenever possible.</li>
-        <li><strong>Build an emergency fund:</strong> Having savings can help you avoid going into debt for unexpected expenses.</li>
-        <li><strong>Seek professional advice:</strong> If you’re overwhelmed, consult a financial advisor or credit counselor for guidance.</li>
-      </ul>
-      
-      <p>Remember, being aware of your debt and having a plan to manage it is crucial for your financial well-being.</p>
-    `
     }
 };
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-    const post = blogPosts[params.slug];
-    if (!post) {
-        return {
-            title: 'Blog Post Not Found'
-        };
+type Params = {
+    params: {
+        slug: string
     }
-    return {
-        title: `${post.title} | Financial Literacy Blog`
-    };
 }
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
-    const post = blogPosts[params.slug];
-    console.log(post);
+export default function BlogPost({ params }: Params) {
+    const post = blogPosts[params.slug as keyof typeof blogPosts];
+
     if (!post) {
         notFound();
     }
@@ -105,7 +81,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
             <h1 className="text-3xl font-bold mb-6">{post.title}</h1>
             <div className="prose lg:prose-xl" dangerouslySetInnerHTML={{ __html: post.content }} />
             <div className="mt-8">
-                <Link href="/literacy" className="text-blue-600 hover:underline">
+                <Link href="/financial-literacy" className="text-blue-600 hover:underline">
                     ← Back to Financial Literacy Center
                 </Link>
             </div>
