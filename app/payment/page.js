@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { v4 as uuidv4 } from 'uuid';
 import emailjs from 'emailjs-com';
 import { Elements } from '@stripe/react-stripe-js';
@@ -29,26 +29,31 @@ export default function PaymentPage() {
     const [showAffirmation, setShowAffirmation] = useState(false);
     const [showEmailConfirmation, setShowEmailConfirmation] = useState(false);
     const [clientSecret, setClientSecret] = useState("");
+    const [installmentPlan, setInstallmentPlan] = useState(null);
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { userEmail } = useAppContext();
 
     useEffect(() => {
+        const installmentQuery = searchParams.get("installment");
+        if (installmentQuery) {
+            setInstallmentPlan(installmentQuery);
+        }
+
         if (paymentMethod === "card") {
             fetch('/api/create-payment', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ amount: 10499 }), // Amount in cents
+                body: JSON.stringify({ amount: installmentQuery ? 3499 : 10499 }), // Adjust based on installment
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log("Client Secret received:", data.clientSecret); // Add this line
                     setClientSecret(data.clientSecret);
                 });
         }
-    }, [paymentMethod]);
+    }, [paymentMethod, searchParams]);
 
     const sendOrderConfirmationEmail = (emailParams) => {
-        // Customer email
         emailjs.send(
             'service_cio6onz',
             'template_for_owner',
@@ -77,13 +82,11 @@ export default function PaymentPage() {
             console.log('Owner email sent successfully:', result);
         }).catch((error) => {
             console.error('Error sending owner email:', error);
-            console.error('Error details:', JSON.stringify(error));
         });
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("Payment method selected:", paymentMethod); // Add this line
         if (paymentMethod === "card") {
             setShowEmailConfirmation(true);
         } else {
@@ -98,11 +101,9 @@ export default function PaymentPage() {
         const emailParams = {
             customer_email: confirmedEmail,
             order_id: orderId,
-            total_amount: "$104.99",
+            total_amount: installmentPlan ? "$34.99" : "$104.99", // Adjust for installment
             payment_method: paymentMethod === "card" ? "Credit/Debit Card" : "Cash on Delivery",
         };
-
-        console.log("Email Params in processPayment:", emailParams);
 
         sendOrderConfirmationEmail(emailParams);
 
@@ -131,7 +132,6 @@ export default function PaymentPage() {
 
     const handlePaymentError = (errorMessage) => {
         console.error('Payment error:', errorMessage);
-        // Handle payment error (e.g., show error message to user)
     };
 
     return (
@@ -140,7 +140,7 @@ export default function PaymentPage() {
                 <CardHeader>
                     <CardTitle>Payment</CardTitle>
                     <CardDescription>
-                        Choose your payment method and complete your purchase.
+                        {installmentPlan ? `You have selected a ${installmentPlan}-month installment plan. You will only be charged for the first installment.` : 'Choose your payment method and complete your purchase.'}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -172,17 +172,13 @@ export default function PaymentPage() {
                             </div>
                         </div>
 
-                        {paymentMethod === "card" && (
-                            clientSecret ? (
-                                <Elements stripe={getStripe()} options={{ clientSecret }}>
-                                    <CardPaymentForm
-                                        onPaymentSuccess={handlePaymentSuccess}
-                                        onPaymentError={handlePaymentError}
-                                    />
-                                </Elements>
-                            ) : (
-                                <div>Loading payment form...</div>
-                            )
+                        {paymentMethod === "card" && clientSecret && (
+                            <Elements stripe={getStripe()} options={{ clientSecret }}>
+                                <CardPaymentForm
+                                    onPaymentSuccess={handlePaymentSuccess}
+                                    onPaymentError={handlePaymentError}
+                                />
+                            </Elements>
                         )}
 
                         {paymentMethod === "cod" && (
@@ -197,7 +193,7 @@ export default function PaymentPage() {
                             <h3 className="text-lg font-semibold">Order Summary</h3>
                             <div className="flex justify-between">
                                 <span>Subtotal</span>
-                                <span>$99.99</span>
+                                <span>{installmentPlan ? "$34.99" : "$99.99"}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span>Shipping</span>
@@ -205,7 +201,7 @@ export default function PaymentPage() {
                             </div>
                             <div className="flex justify-between font-semibold">
                                 <span>Total</span>
-                                <span>$104.99</span>
+                                <span>{installmentPlan ? "$39.99" : "$104.99"}</span>
                             </div>
                         </div>
                     </form>
@@ -235,4 +231,3 @@ export default function PaymentPage() {
         </div>
     );
 }
-

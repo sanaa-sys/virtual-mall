@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Minus, Plus, Trash2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import NavBar from "@/components/ui/navbar";
@@ -19,11 +19,9 @@ import { useRouter } from "next/navigation";
 
 export default function CartPage() {
   const { cart, setCart } = useAppContext();
-  const [budget, setBudget] = useState(0); // State for budget input
-  const [budgetExceeded, setBudgetExceeded] = useState(false); // State to track if budget is exceeded
-  const [installments, setInstallments] = useState(null); // State for installment options
-
-  const router = useRouter(); // Initialize router here
+  const [budget, setBudget] = useState(0);
+  const [budgetExceeded, setBudgetExceeded] = useState(false);
+  const router = useRouter();
 
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity >= 0) {
@@ -46,7 +44,6 @@ export default function CartPage() {
   const tax = subtotal * 0.1; // Assuming 10% tax
   const total = subtotal + tax;
 
-  // Function to send the email
   const sendOrderConfirmationEmail = (orderDetails) => {
     emailjs
       .send("service_cio6onz", "template_t5k24tp", orderDetails, "YOUR_USER_ID")
@@ -60,42 +57,29 @@ export default function CartPage() {
       );
   };
 
-  // Handle checkout
   const handleCheckout = () => {
     const numericBudget = parseFloat(budget);
     if (numericBudget < total) {
       setBudgetExceeded(true);
-      showInstallmentOptions(); // Show installment options when budget is low
+      router.push("/installments"); // Redirect to installments page when budget is low
     } else {
       setBudgetExceeded(false);
-      alert(`Budget is sufficient! Proceeding to checkout.`);
-      router.push("/payment"); // Use router here
-      // Prepare order details for email
+      router.push("/payment");
       const orderDetails = {
-        customer_name: "John Doe", // Replace with dynamic user data
-        customer_email: "johndoe@example.com", // Replace with dynamic user email
-        order_id: new Date().toISOString(), // Use a dynamic order ID or a unique ID
+        customer_name: "John Doe",
+        customer_email: "johndoe@example.com",
+        order_id: new Date().toISOString(),
         subtotal: subtotal.toFixed(2),
         tax: tax.toFixed(2),
         total: total.toFixed(2),
         product_list: cart
           .map((item) => `${item.name} (x${item.quantity})`)
           .join(", "),
-        shipping_address: "123 Main St, City", // Replace with dynamic address
+        shipping_address: "123 Main St, City",
       };
 
-      sendOrderConfirmationEmail(orderDetails); // Send the email after budget check passes
+      sendOrderConfirmationEmail(orderDetails);
     }
-  };
-
-  // Show installment options
-  const showInstallmentOptions = () => {
-    const options = [3, 6, 12]; // Installments options: 3 months, 6 months, 12 months
-    const installmentOptions = options.map((months) => {
-      const installmentAmount = total / months;
-      return { months, installmentAmount: installmentAmount.toFixed(2) };
-    });
-    setInstallments(installmentOptions);
   };
 
   if (cart.length === 0) {
@@ -207,20 +191,7 @@ export default function CartPage() {
             {/* Budget Exceeded Warning */}
             {budgetExceeded && (
               <div className="mt-2 text-red-500">
-                Your total exceeds your budget. Please adjust your cart.
-              </div>
-            )}
-
-            {/* Display Installment Options */}
-            {installments && (
-              <div className="mt-4">
-                <h3 className="font-semibold">Installment Options:</h3>
-                {installments.map((option) => (
-                  <div key={option.months} className="flex justify-between mb-2">
-                    <span>{option.months} Months</span>
-                    <span>${option.installmentAmount} per month</span>
-                  </div>
-                ))}
+                Your total exceeds your budget. You will be redirected to installment options.
               </div>
             )}
 
