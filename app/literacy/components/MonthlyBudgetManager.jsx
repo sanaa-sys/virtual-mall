@@ -6,14 +6,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 
-type BudgetCategory = {
-    name: string;
-    amount: number;
-    spent: number;
-}
-
 export default function MonthlyBudgetManager() {
-    const [categories, setCategories] = useState<BudgetCategory[]>(() => {
+    const [categories, setCategories] = useState(() => {
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem('budgetCategories')
             return saved ? JSON.parse(saved) : []
@@ -41,13 +35,13 @@ export default function MonthlyBudgetManager() {
         }
     }
 
-    const updateSpent = (index: number, spent: number) => {
+    const updateSpent = (index, spent) => {
         const updatedCategories = [...categories]
         updatedCategories[index].spent = spent
         setCategories(updatedCategories)
     }
 
-    const deleteCategory = (index: number) => {
+    const deleteCategory = (index) => {
         const updatedCategories = categories.filter((_, i) => i !== index)
         setCategories(updatedCategories)
     }

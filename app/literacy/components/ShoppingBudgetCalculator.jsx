@@ -9,9 +9,9 @@ export default function ShoppingBudgetCalculator() {
     const [income, setIncome] = useState('')
     const [savingsPercentage, setSavingsPercentage] = useState('')
     const [essentialExpenses, setEssentialExpenses] = useState('')
-    const [result, setResult] = useState<number | null>(null)
+    const [result, setResult] = useState(null)
 
-    const calculateShoppingBudget = (e: React.FormEvent) => {
+    const calculateShoppingBudget = (e) => {
         e.preventDefault()
         const incomeValue = parseFloat(income) || 0
         const savingsValue = (parseFloat(savingsPercentage) || 0) / 100

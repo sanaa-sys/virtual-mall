@@ -5,13 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 
-type Reward = {
-    name: string;
-    description: string;
-    pointsRequired: number;
-}
-
-const rewards: Reward[] = [
+const rewards = [
     { name: 'Bronze', description: '5% discount on next purchase', pointsRequired: 100 },
     { name: 'Silver', description: '10% discount on next purchase', pointsRequired: 250 },
     { name: 'Gold', description: '15% discount on next purchase', pointsRequired: 500 },
@@ -27,21 +21,22 @@ export default function LoyaltySystem() {
     })
     const [currentLevel, setCurrentLevel] = useState('')
 
-    // Define getLoyaltyLevel function before using it
-    const getLoyaltyLevel = (points: number) => {
-        if (points >= 1000) return 'Platinum';
-        if (points >= 500) return 'Gold';
-        if (points >= 250) return 'Silver';
-        if (points >= 100) return 'Bronze';
-        return 'None';
-    }
-
     useEffect(() => {
         localStorage.setItem('loyaltyPoints', points.toString())
-        setCurrentLevel(getLoyaltyLevel(points)) // Call getLoyaltyLevel here after defining it
+        updateLevel()
     }, [points])
 
-    const earnPoints = (amount: number) => {
+    const updateLevel = () => {
+        const newLevel = rewards.reduce((acc, reward) => {
+            if (points >= reward.pointsRequired) {
+                return reward.name
+            }
+            return acc
+        }, '')
+        setCurrentLevel(newLevel)
+    }
+
+    const earnPoints = (amount) => {
         setPoints(prevPoints => prevPoints + amount)
     }
 
@@ -92,3 +87,4 @@ export default function LoyaltySystem() {
         </div>
     )
 }
+

@@ -12,7 +12,7 @@ export default function ContactForm() {
     const [message, setMessage] = useState('')
     const [submitted, setSubmitted] = useState(false)
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         // Here you would typically send the form data to your server or a third-party service
         console.log('Form submitted:', { name, email, message })

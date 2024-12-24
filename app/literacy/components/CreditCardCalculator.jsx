@@ -9,9 +9,9 @@ export default function CreditCardCalculator() {
     const [balance, setBalance] = useState('')
     const [interestRate, setInterestRate] = useState('')
     const [monthlyPayment, setMonthlyPayment] = useState('')
-    const [result, setResult] = useState<{ months: number, totalInterest: number } | null>(null)
+    const [result, setResult] = useState(null)
 
-    const calculatePayoff = (e: React.FormEvent) => {
+    const calculatePayoff = (e) => {
         e.preventDefault()
         const b = parseFloat(balance)
         const r = parseFloat(interestRate) / 100 / 12

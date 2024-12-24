@@ -5,14 +5,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-type Expense = {
-    category: string;
-    amount: number;
-}
-
 export default function ExpenseBreakdownCalculator() {
     const [income, setIncome] = useState('')
-    const [expenses, setExpenses] = useState<Expense[]>([
+    const [expenses, setExpenses] = useState([
         { category: 'Housing', amount: 0 },
         { category: 'Transportation', amount: 0 },
         { category: 'Food', amount: 0 },
@@ -20,15 +15,15 @@ export default function ExpenseBreakdownCalculator() {
         { category: 'Insurance', amount: 0 },
         { category: 'Other', amount: 0 },
     ])
-    const [breakdown, setBreakdown] = useState<{ category: string; percentage: number }[]>([])
+    const [breakdown, setBreakdown] = useState([])
 
-    const handleExpenseChange = (index: number, amount: string) => {
+    const handleExpenseChange = (index, amount) => {
         const newExpenses = [...expenses]
         newExpenses[index].amount = parseFloat(amount) || 0
         setExpenses(newExpenses)
     }
 
-    const calculateBreakdown = (e: React.FormEvent) => {
+    const calculateBreakdown = (e) => {
         e.preventDefault()
         const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0)
         const incomeValue = parseFloat(income) || 0

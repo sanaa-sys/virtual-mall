@@ -10,9 +10,9 @@ export default function SavingsCalculator() {
     const [initialSavings, setInitialSavings] = useState('')
     const [monthlyContribution, setMonthlyContribution] = useState('')
     const [interestRate, setInterestRate] = useState('')
-    const [result, setResult] = useState<number | null>(null)
+    const [result, setResult] = useState(null)
 
-    const calculateSavings = (e: React.FormEvent) => {
+    const calculateSavings = (e) => {
         e.preventDefault()
         const P = parseFloat(initialSavings)
         const PMT = parseFloat(monthlyContribution)
