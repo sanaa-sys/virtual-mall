@@ -2,11 +2,11 @@
 
 
 
-##Virtual Store
+##Virtual Store##
 
 An innovative e-commerce website where people can buy and sell products while learning more about financial literacy. By integrating e-commerce with financial education, we aim to help users make informed financial decisions.
 
-##Features
+##Features##
 Buy and Sell Products
 
 Browse a wide variety of products in categories such as electronics, fashion, home goods, and more.
@@ -38,12 +38,16 @@ Loyalty System
 Reward users when they read articles about financial literacy and use any of the calculators.
 Get a range of discounts when they reach different levels.
 
-##Tech Stack
+##Tech Stack##
+
+
 Frontend: Next.js, TailwindCSS
 Database and Backend: Firebase
 Payment Gateway: Stripe
 
-##License
+##License##
+
+
 This project is licensed under the MIT License. See the LICENSE file for more details.
 
 
