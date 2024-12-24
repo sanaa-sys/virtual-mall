@@ -85,7 +85,7 @@ const HeaderTop = () => {
               size="lg"
               className="flex-gap-4 bg-gradient-to-r from-red-400 to-orange-600 text-white font-semibold hover:from-orange-600 hover:to-red-600 transition-all duration-300 transform hover:scale-105"
             >
-              Be a Seller on Virtual Mall
+              Be a Seller on Virtual Store
             </Button>
           </motion.div>
         </div>

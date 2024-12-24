@@ -104,7 +104,7 @@ const SellerPage = () => {
             <header className="bg-white shadow-md">
                 <div className="container mx-auto px-6 py-4">
                     <h1 className="text-3xl font-bold text-gray-800">
-                        Become a Seller on Virtual Mall Lahore
+                        Become a Seller on Virtual Store
                     </h1>
                 </div>
             </header>
@@ -117,7 +117,7 @@ const SellerPage = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                     >
-                        Why Sell on Virtual Mall Lahore?
+                        Why Sell on Virtual Store?
                     </motion.h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {benefits.map((benefit, index) => (

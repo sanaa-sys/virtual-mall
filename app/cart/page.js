@@ -1,9 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Minus, Plus, Trash2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import NavBar from "@/components/ui/navbar";
+import { Badge } from "@/components/ui/badge"; // Adjust the path according to your project structure
 import {
   Table,
   TableBody,
@@ -23,28 +24,31 @@ const discountLevels = {
     'Gold': 0.15,
     'Platinum': 0.20
 }
+
+const getLoyaltyLevel = (points) => {
+    if (points >= 1000) return 'Platinum';
+    if (points >= 500) return 'Gold';
+    if (points >= 250) return 'Silver';
+    if (points >= 100) return 'Bronze';
+    return '';
+}
+
 export default function CartPage() {
   const { cart, setCart } = useAppContext();
-  const [budget, setBudget] = useState(0); // State for budget input
-  const [budgetExceeded, setBudgetExceeded] = useState(false); // State to track if budget is exceeded
-    const [installments, setInstallments] = useState(null); // State for installment options
-    const [loyaltyPoints, setLoyaltyPoints] = useState(0)
-    const [loyaltyLevel, setLoyaltyLevel] = useState('')
+  const [budget, setBudget] = useState(0);
+  const [budgetExceeded, setBudgetExceeded] = useState(false);
+  const [installments, setInstallments] = useState(null);
+  const [loyaltyPoints, setLoyaltyPoints] = useState(0);
+  const [loyaltyLevel, setLoyaltyLevel] = useState('');
 
-    const router = useRouter(); // Initialize router here
+  const router = useRouter();
 
-    const points = localStorage.getItem('loyaltyPoints')
-    setLoyaltyPoints(points ? parseInt(points, 10) : 0)
-    setLoyaltyLevel(getLoyaltyLevel(points ? parseInt(points, 10) : 0))
-
-
-const getLoyaltyLevel = (point) => {
-    if (points >= 1000) return 'Platinum'
-    if (points >= 500) return 'Gold'
-    if (points >= 250) return 'Silver'
-    if (points >= 100) return 'Bronze'
-    return ''
-}
+  useEffect(() => {
+    const points = localStorage.getItem('loyaltyPoints');
+    const numericPoints = points ? parseInt(points, 10) : 0;
+    setLoyaltyPoints(numericPoints);
+    setLoyaltyLevel(getLoyaltyLevel(numericPoints));
+  }, []);
 
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity >= 0) {
@@ -64,11 +68,10 @@ const getLoyaltyLevel = (point) => {
     (sum, item) => sum + item.price * item.quantity,
     0
   );
-  const tax = subtotal * 0.1; // Assuming 10% tax
+  const tax = subtotal * 0.1;
 
-
-const discount = loyaltyLevel ? subtotal * discountLevels[loyaltyLevel] : 0;
-const total = subtotal + tax - discount;
+  const discount = loyaltyLevel ? subtotal * discountLevels[loyaltyLevel] : 0;
+  const total = subtotal + tax - discount;
 
   const sendOrderConfirmationEmail = (orderDetails) => {
     emailjs
@@ -87,7 +90,7 @@ const total = subtotal + tax - discount;
     const numericBudget = parseFloat(budget);
     if (numericBudget < total) {
       setBudgetExceeded(true);
-      router.push("/installments"); // Redirect to installments page when budget is low
+      router.push("/installments");
     } else {
       setBudgetExceeded(false);
       router.push("/payment");
@@ -116,7 +119,7 @@ const total = subtotal + tax - discount;
           <Button>Continue Shopping</Button>
         </Link>
       </div>
-    );
+ );
   }
 
   return (
@@ -193,8 +196,8 @@ const total = subtotal + tax - discount;
             <div className="flex justify-between mb-2">
               <span>Subtotal</span>
               <span>${subtotal.toFixed(2)}</span>
-                      </div>
-                       {loyaltyLevel && (
+            </div>
+            {loyaltyLevel && (
               <div className="flex items-center justify-end">
                 <Badge variant="outline" className="mr-2">{loyaltyLevel}</Badge>
                 <p className="text-green-600">

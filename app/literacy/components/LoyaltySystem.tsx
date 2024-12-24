@@ -27,20 +27,19 @@ export default function LoyaltySystem() {
     })
     const [currentLevel, setCurrentLevel] = useState('')
 
+    // Define getLoyaltyLevel function before using it
+    const getLoyaltyLevel = (points: number) => {
+        if (points >= 1000) return 'Platinum';
+        if (points >= 500) return 'Gold';
+        if (points >= 250) return 'Silver';
+        if (points >= 100) return 'Bronze';
+        return 'None';
+    }
+
     useEffect(() => {
         localStorage.setItem('loyaltyPoints', points.toString())
-        updateLevel()
+        setCurrentLevel(getLoyaltyLevel(points)) // Call getLoyaltyLevel here after defining it
     }, [points])
-
-    const updateLevel = () => {
-        const newLevel = rewards.reduce((acc, reward) => {
-            if (points >= reward.pointsRequired) {
-                return reward.name
-            }
-            return acc
-        }, '')
-        setCurrentLevel(newLevel)
-    }
 
     const earnPoints = (amount: number) => {
         setPoints(prevPoints => prevPoints + amount)
@@ -93,4 +92,3 @@ export default function LoyaltySystem() {
         </div>
     )
 }
-

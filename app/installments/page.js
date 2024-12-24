@@ -20,7 +20,7 @@ export default function InstallmentsPage() {
   };
 
   const handleProceedToPayment = () =>{
-    router.push("/payment?installment=1"); // Proceed without installments
+    router.push("/payment"); // Proceed without installments
   };
 
   const handleProceedToCheckout = () => {

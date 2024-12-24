@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import emailjs from 'emailjs-com';
 import { Elements } from '@stripe/react-stripe-js';
 import { getStripe } from '../lib/stripe';
-
+import NavBar from "@/components/ui/navbar";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -23,6 +23,13 @@ import { AffirmationModal } from "@/components/ui/confirmation-modal";
 import { EmailConfirmationModal } from "@/components/ui/email_confirmation";
 import { useAppContext } from "../../context/AppContext";
 
+const loyaltyDiscounts = {
+    'Bronze': 0.05,   // 5% discount
+    'Silver': 0.10,   // 10% discount
+    'Gold': 0.15,     // 15% discount
+    'Platinum': 0.20, // 20% discount
+};
+
 export default function PaymentPage() {
     const [paymentMethod, setPaymentMethod] = useState("card");
     const [isProcessing, setIsProcessing] = useState(false);
@@ -30,6 +37,9 @@ export default function PaymentPage() {
     const [showEmailConfirmation, setShowEmailConfirmation] = useState(false);
     const [clientSecret, setClientSecret] = useState("");
     const [installmentPlan, setInstallmentPlan] = useState(null);
+    const [loyaltyLevel, setLoyaltyLevel] = useState(''); // New state to store loyalty level
+    const [discount, setDiscount] = useState(0); // New state for discount
+
     const router = useRouter();
     const searchParams = useSearchParams();
     const { userEmail } = useAppContext();
@@ -40,11 +50,22 @@ export default function PaymentPage() {
             setInstallmentPlan(installmentQuery);
         }
 
+        // Fetch loyalty points and calculate the discount
+        const points = parseInt(localStorage.getItem('loyaltyPoints') || '0', 10);
+        let level = '';
+        if (points >= 1000) level = 'Platinum';
+        else if (points >= 500) level = 'Gold';
+        else if (points >= 250) level = 'Silver';
+        else if (points >= 100) level = 'Bronze';
+
+        setLoyaltyLevel(level);
+        setDiscount(loyaltyDiscounts[level] || 0); // Set the discount based on loyalty level
+
         if (paymentMethod === "card") {
             fetch('/api/create-payment', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ amount: installmentQuery ? 3499 : 10499 }), // Adjust based on installment
+                body: JSON.stringify({ amount: installmentQuery ? 3499 : 10499 }),
             })
                 .then((res) => res.json())
                 .then((data) => {
@@ -53,36 +74,10 @@ export default function PaymentPage() {
         }
     }, [paymentMethod, searchParams]);
 
-    const sendOrderConfirmationEmail = (emailParams) => {
-        emailjs.send(
-            'service_cio6onz',
-            'template_for_owner',
-            emailParams,
-            '1oDlFZNgaaQnAhytI'
-        ).then((result) => {
-            console.log('Customer email sent successfully:', result);
-        }).catch((error) => {
-            console.error('Error sending customer email:', error);
-        });
-
-        // Owner email
-        const ownerEmailParams = {
-            owner_email: "afsbibi@gmail.com",
-            order_id: emailParams.order_id,
-            total_amount: emailParams.total_amount,
-            payment_method: emailParams.payment_method
-        };
-
-        emailjs.send(
-            'service_cio6onz',
-            'template_t5k24tp',
-            ownerEmailParams,
-            '1oDlFZNgaaQnAhytI'
-        ).then((result) => {
-            console.log('Owner email sent successfully:', result);
-        }).catch((error) => {
-            console.error('Error sending owner email:', error);
-        });
+    const calculateTotal = () => {
+        const baseAmount = installmentPlan ? 3499 : 10499; // Amount in cents
+        const discountAmount = baseAmount * discount;
+        return (baseAmount - discountAmount + 500) / 100; // Including $5 shipping, converting from cents to dollars
     };
 
     const handleSubmit = async (event) => {
@@ -101,7 +96,7 @@ export default function PaymentPage() {
         const emailParams = {
             customer_email: confirmedEmail,
             order_id: orderId,
-            total_amount: installmentPlan ? "$34.99" : "$104.99", // Adjust for installment
+            total_amount: `$${calculateTotal()}`, // Adjust total amount with discount
             payment_method: paymentMethod === "card" ? "Credit/Debit Card" : "Cash on Delivery",
         };
 
@@ -116,14 +111,35 @@ export default function PaymentPage() {
         setIsProcessing(false);
     };
 
-    const handleEmailConfirmation = (confirmedEmail) => {
-        setShowEmailConfirmation(false);
-        processPayment(confirmedEmail);
-    };
+    const sendOrderConfirmationEmail = (emailParams) => {
+        // emailjs.send(
+        //     'service_cio6onz',
+        //     'template_for_owner',
+        //     emailParams,
+        //     '1oDlFZNgaaQnAhytI'
+        // ).then((result) => {
+        //     console.log('Customer email sent successfully:', result);
+        // }).catch((error) => {
+        //     console.error('Error sending customer email:', error);
+        // });
 
-    const handleCloseAffirmation = () => {
-        setShowAffirmation(false);
-        router.push("/home");
+        const ownerEmailParams = {
+            owner_email: "afsbibi@gmail.com",
+            order_id: emailParams.order_id,
+            total_amount: emailParams.total_amount,
+            payment_method: emailParams.payment_method,
+        };
+
+        emailjs.send(
+            'service_cio6onz',
+            'template_t5k24tp',
+            ownerEmailParams,
+            '1oDlFZNgaaQnAhytI'
+        ).then((result) => {
+            console.log('Owner email sent successfully:', result);
+        }).catch((error) => {
+            console.error('Error sending owner email:', error);
+        });
     };
 
     const handlePaymentSuccess = () => {
@@ -135,7 +151,9 @@ export default function PaymentPage() {
     };
 
     return (
+        
         <div className="container mx-auto py-10">
+            <NavBar />
             <Card className="max-w-2xl mx-auto">
                 <CardHeader>
                     <CardTitle>Payment</CardTitle>
@@ -200,34 +218,36 @@ export default function PaymentPage() {
                                 <span>$5.00</span>
                             </div>
                             <div className="flex justify-between font-semibold">
+                                <span>Discount</span>
+                                <span>- ${discount * 100}%</span> {/* Display the discount */}
+                            </div>
+                            <div className="flex justify-between font-semibold">
                                 <span>Total</span>
-                                <span>{installmentPlan ? "$39.99" : "$104.99"}</span>
+                                <span>${calculateTotal()}</span> {/* Adjusted total with discount */}
                             </div>
                         </div>
+
+                        <Button type="submit" disabled={isProcessing} className="mt-4">
+                            {isProcessing ? "Processing..." : "Place Order"}
+                        </Button>
                     </form>
                 </CardContent>
-                <CardFooter>
-                    {paymentMethod === "cod" && (
-                        <Button
-                            className="w-full"
-                            type="submit"
-                            onClick={handleSubmit}
-                            disabled={isProcessing}
-                        >
-                            Place Order
-                        </Button>
-                    )}
-                </CardFooter>
+                <CardFooter></CardFooter>
             </Card>
-            <AffirmationModal
-                isOpen={showAffirmation}
-                onClose={handleCloseAffirmation}
-            />
-            <EmailConfirmationModal
-                isOpen={showEmailConfirmation}
-                onClose={() => setShowEmailConfirmation(false)}
-                onConfirm={handleEmailConfirmation}
-            />
+
+            {showAffirmation && (
+                <AffirmationModal
+                    onClose={() => setShowAffirmation(false)}
+                    onConfirm={() => router.push("/home")}
+                />
+            )}
+
+            {showEmailConfirmation && (
+                <EmailConfirmationModal
+                    onClose={() => setShowEmailConfirmation(false)}
+                    onConfirm={(confirmedEmail) => processPayment(confirmedEmail)}
+                />
+            )}
         </div>
     );
 }
